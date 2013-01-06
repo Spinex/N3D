@@ -1,1 +1,1 @@
-Lorem Ipsum dolot sit amet, consectetur adipiscing elit.
+Lorem ipsum dolot sit amet, consectetur adipiscing elit.
