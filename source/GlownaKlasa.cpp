@@ -1,5 +1,6 @@
 #include "naglowek.hpp"
 
+//eksperymentuje z gitem
 
 GlownaKlasa::GlownaKlasa() : direction(0), zdirection(0), bohaterGry(NULL) {
 	device = createDevice( EDT_OPENGL, core::dimension2d<u32>( 800, 600 ), 32, false, false, true, &aktywne );
