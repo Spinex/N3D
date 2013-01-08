@@ -4,6 +4,10 @@ LDFLAGS_DEBUG=-lIrrlicht
 CFLAGS_RELEASE=-std=c++11 -Wall -Wextra -Werror -Wno-unused-parameter -Wno-unknown-pragmas -O2 -DNDEBUG
 LDFLAGS_RELEASE=-lIrrlicht
 SOURCES=Hero.cpp GlownaKlasa.cpp main.cpp petlaGry.cpp sterowanie.cpp zmienne_globalne.cpp
+#USE_PRECOMPILED_HEADERS=yes jeśli chcesz użyć prekompilowanych nagłówków
+USE_PRECOMPILED_HEADERS=no
+PRECOMP=$(USE_PRECOMPILED_HEADERS:yes=precomp.hpp)
+INCLUDES=$(PRECOMP).gch Hero.hpp GlownaKlasa.hpp InputOutputHandler.hpp menedzerObiektow.hpp
 OBJ_PREFIX=../obj/
 OBJECTS_RELEASE=$(OBJ_PREFIX)Hero.o $(OBJ_PREFIX)GlownaKlasa.o $(OBJ_PREFIX)main.o $(OBJ_PREFIX)petlaGry.o $(OBJ_PREFIX)sterowanie.o $(OBJ_PREFIX)zmienne_globalne.o
 OBJECTS_DEBUG=$(OBJECTS_RELEASE:.o=d.o)
@@ -15,51 +19,56 @@ debug: create_dirs $(OBJECTS_DEBUG)
 	$(CXX) $(OBJECTS_DEBUG) $(LDFLAGS_DEBUG) -o ../bin/ProjektGry.exe
 
 create_dirs:
-	mkdir "../bin"
-	mkdir "../obj"
+	mkdir -p "../bin"
+	mkdir -p "../obj"
 
-precomp.hpp.gch: precomp.hpp incl.hpp
-	$(CXX) $(CFLAGS_DEBUG) precomp.hpp
+precomp.hpp.gch: precomp.hpp
+	$(CXX) $(CFLAGS_RELEASE) $(PRECOMP)
 
-incl.hpp: Hero.hpp GlownaKlasa.hpp InputOutputHandler.hpp menedzerObiektow.hpp
-
-$(OBJ_PREFIX)Herod.o: Hero.cpp incl.hpp
+$(OBJ_PREFIX)Herod.o: Hero.cpp $(INCLUDES)
 	$(CXX) $(CFLAGS_DEBUG) -c Hero.cpp -o $(OBJ_PREFIX)Herod.o
 
-$(OBJ_PREFIX)GlownaKlasad.o: GlownaKlasa.cpp incl.hpp
+$(OBJ_PREFIX)GlownaKlasad.o: GlownaKlasa.cpp $(INCLUDES)
 	$(CXX) $(CFLAGS_DEBUG) -c GlownaKlasa.cpp -o $(OBJ_PREFIX)GlownaKlasad.o
 
-$(OBJ_PREFIX)maind.o: main.cpp incl.hpp
+$(OBJ_PREFIX)maind.o: main.cpp $(INCLUDES)
 	$(CXX) $(CFLAGS_DEBUG) -c main.cpp -o $(OBJ_PREFIX)maind.o
 
-$(OBJ_PREFIX)petlaGryd.o: petlaGry.cpp incl.hpp
+$(OBJ_PREFIX)petlaGryd.o: petlaGry.cpp $(INCLUDES)
 	$(CXX) $(CFLAGS_DEBUG) -c petlaGry.cpp -o $(OBJ_PREFIX)petlaGryd.o
 
-$(OBJ_PREFIX)sterowanied.o: sterowanie.cpp incl.hpp
+$(OBJ_PREFIX)sterowanied.o: sterowanie.cpp $(INCLUDES)
 	$(CXX) $(CFLAGS_DEBUG) -c sterowanie.cpp -o $(OBJ_PREFIX)sterowanied.o
 
-$(OBJ_PREFIX)zmienne_globalned.o: zmienne_globalne.cpp incl.hpp
+$(OBJ_PREFIX)zmienne_globalned.o: zmienne_globalne.cpp $(INCLUDES)
 	$(CXX) $(CFLAGS_DEBUG) -c zmienne_globalne.cpp -o $(OBJ_PREFIX)zmienne_globalned.o
 
-$(OBJ_PREFIX)Hero.o: Hero.cpp incl.hpp
+$(OBJ_PREFIX)Hero.o: Hero.cpp $(INCLUDES)
 	$(CXX) $(CFLAGS_RELEASE) -c Hero.cpp -o $(OBJ_PREFIX)Hero.o
 
-$(OBJ_PREFIX)GlownaKlasa.o: GlownaKlasa.cpp incl.hpp
+$(OBJ_PREFIX)GlownaKlasa.o: GlownaKlasa.cpp $(INCLUDES)
 	$(CXX) $(CFLAGS_RELEASE) -c GlownaKlasa.cpp -o $(OBJ_PREFIX)GlownaKlasa.o
 
-$(OBJ_PREFIX)main.o: main.cpp incl.hpp
+$(OBJ_PREFIX)main.o: main.cpp $(INCLUDES)
 	$(CXX) $(CFLAGS_RELEASE) -c main.cpp -o $(OBJ_PREFIX)main.o
 
-$(OBJ_PREFIX)petlaGry.o: petlaGry.cpp incl.hpp
+$(OBJ_PREFIX)petlaGry.o: petlaGry.cpp $(INCLUDES)
 	$(CXX) $(CFLAGS_RELEASE) -c petlaGry.cpp -o $(OBJ_PREFIX)petlaGry.o
 
-$(OBJ_PREFIX)sterowanie.o: sterowanie.cpp incl.hpp
+$(OBJ_PREFIX)sterowanie.o: sterowanie.cpp $(INCLUDES)
 	$(CXX) $(CFLAGS_RELEASE) -c sterowanie.cpp -o $(OBJ_PREFIX)sterowanie.o
 
-$(OBJ_PREFIX)zmienne_globalne.o: zmienne_globalne.cpp incl.hpp
+$(OBJ_PREFIX)zmienne_globalne.o: zmienne_globalne.cpp $(INCLUDES)
 	$(CXX) $(CFLAGS_RELEASE) -c zmienne_globalne.cpp -o $(OBJ_PREFIX)zmienne_globalne.o
 
 clean:
-	rm $(OBJ_PREFIX)*.o
+	rm -f $(OBJ_PREFIX)*.o
+	rm -f *.gch
 
-.PHONY: release debug clean create_dirs
+no:
+
+no.hpp:
+
+no.gch:
+
+.PHONY: release debug clean create_dirs no no.hpp no.gch
