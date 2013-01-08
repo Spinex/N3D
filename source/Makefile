@@ -18,40 +18,45 @@ create_dirs:
 	mkdir "../bin"
 	mkdir "../obj"
 
-$(OBJ_PREFIX)Herod.o: Hero.cpp Hero.hpp GlownaKlasa.hpp InputOutputHandler.hpp menedzerObiektow.hpp naglowek.hpp
+precomp.hpp.gch: precomp.hpp incl.hpp
+	$(CXX) $(CFLAGS_DEBUG) precomp.hpp
+
+incl.hpp: Hero.hpp GlownaKlasa.hpp InputOutputHandler.hpp menedzerObiektow.hpp
+
+$(OBJ_PREFIX)Herod.o: Hero.cpp incl.hpp
 	$(CXX) $(CFLAGS_DEBUG) -c Hero.cpp -o $(OBJ_PREFIX)Herod.o
 
-$(OBJ_PREFIX)GlownaKlasad.o: GlownaKlasa.cpp Hero.hpp GlownaKlasa.hpp InputOutputHandler.hpp menedzerObiektow.hpp naglowek.hpp
+$(OBJ_PREFIX)GlownaKlasad.o: GlownaKlasa.cpp incl.hpp
 	$(CXX) $(CFLAGS_DEBUG) -c GlownaKlasa.cpp -o $(OBJ_PREFIX)GlownaKlasad.o
 
-$(OBJ_PREFIX)maind.o: main.cpp Hero.hpp GlownaKlasa.hpp InputOutputHandler.hpp menedzerObiektow.hpp naglowek.hpp
+$(OBJ_PREFIX)maind.o: main.cpp incl.hpp
 	$(CXX) $(CFLAGS_DEBUG) -c main.cpp -o $(OBJ_PREFIX)maind.o
 
-$(OBJ_PREFIX)petlaGryd.o: petlaGry.cpp Hero.hpp GlownaKlasa.hpp InputOutputHandler.hpp menedzerObiektow.hpp naglowek.hpp
+$(OBJ_PREFIX)petlaGryd.o: petlaGry.cpp incl.hpp
 	$(CXX) $(CFLAGS_DEBUG) -c petlaGry.cpp -o $(OBJ_PREFIX)petlaGryd.o
 
-$(OBJ_PREFIX)sterowanied.o: sterowanie.cpp Hero.hpp GlownaKlasa.hpp InputOutputHandler.hpp menedzerObiektow.hpp naglowek.hpp
+$(OBJ_PREFIX)sterowanied.o: sterowanie.cpp incl.hpp
 	$(CXX) $(CFLAGS_DEBUG) -c sterowanie.cpp -o $(OBJ_PREFIX)sterowanied.o
 
-$(OBJ_PREFIX)zmienne_globalned.o: zmienne_globalne.cpp Hero.hpp GlownaKlasa.hpp InputOutputHandler.hpp menedzerObiektow.hpp naglowek.hpp
+$(OBJ_PREFIX)zmienne_globalned.o: zmienne_globalne.cpp incl.hpp
 	$(CXX) $(CFLAGS_DEBUG) -c zmienne_globalne.cpp -o $(OBJ_PREFIX)zmienne_globalned.o
 
-$(OBJ_PREFIX)Hero.o: Hero.cpp Hero.hpp GlownaKlasa.hpp InputOutputHandler.hpp menedzerObiektow.hpp naglowek.hpp
+$(OBJ_PREFIX)Hero.o: Hero.cpp incl.hpp
 	$(CXX) $(CFLAGS_RELEASE) -c Hero.cpp -o $(OBJ_PREFIX)Hero.o
 
-$(OBJ_PREFIX)GlownaKlasa.o: GlownaKlasa.cpp Hero.hpp GlownaKlasa.hpp InputOutputHandler.hpp menedzerObiektow.hpp naglowek.hpp
+$(OBJ_PREFIX)GlownaKlasa.o: GlownaKlasa.cpp incl.hpp
 	$(CXX) $(CFLAGS_RELEASE) -c GlownaKlasa.cpp -o $(OBJ_PREFIX)GlownaKlasa.o
 
-$(OBJ_PREFIX)main.o: main.cpp Hero.hpp GlownaKlasa.hpp InputOutputHandler.hpp menedzerObiektow.hpp naglowek.hpp
+$(OBJ_PREFIX)main.o: main.cpp incl.hpp
 	$(CXX) $(CFLAGS_RELEASE) -c main.cpp -o $(OBJ_PREFIX)main.o
 
-$(OBJ_PREFIX)petlaGry.o: petlaGry.cpp Hero.hpp GlownaKlasa.hpp InputOutputHandler.hpp menedzerObiektow.hpp naglowek.hpp
+$(OBJ_PREFIX)petlaGry.o: petlaGry.cpp incl.hpp
 	$(CXX) $(CFLAGS_RELEASE) -c petlaGry.cpp -o $(OBJ_PREFIX)petlaGry.o
 
-$(OBJ_PREFIX)sterowanie.o: sterowanie.cpp Hero.hpp GlownaKlasa.hpp InputOutputHandler.hpp menedzerObiektow.hpp naglowek.hpp
+$(OBJ_PREFIX)sterowanie.o: sterowanie.cpp incl.hpp
 	$(CXX) $(CFLAGS_RELEASE) -c sterowanie.cpp -o $(OBJ_PREFIX)sterowanie.o
 
-$(OBJ_PREFIX)zmienne_globalne.o: zmienne_globalne.cpp Hero.hpp GlownaKlasa.hpp InputOutputHandler.hpp menedzerObiektow.hpp naglowek.hpp
+$(OBJ_PREFIX)zmienne_globalne.o: zmienne_globalne.cpp incl.hpp
 	$(CXX) $(CFLAGS_RELEASE) -c zmienne_globalne.cpp -o $(OBJ_PREFIX)zmienne_globalne.o
 
 clean:

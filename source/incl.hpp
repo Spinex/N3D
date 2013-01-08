@@ -1,6 +1,5 @@
 #pragma once
 
-#include <irrlicht.h>
 #pragma comment(lib, "Irrlicht.lib")
 
 enum DIRECTION {

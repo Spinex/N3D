@@ -1,3 +1,6 @@
+#pragma once
+#include "precomp.hpp"
+
 class GlownaKlasa
 {
 private:
@@ -36,10 +39,5 @@ private:
 public:
 	GlownaKlasa();  
 	~GlownaKlasa();
-	
-	
-	
-	
-	
 	
 };      

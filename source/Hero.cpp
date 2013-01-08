@@ -1,4 +1,5 @@
-#include "naglowek.hpp"
+#include "precomp.hpp"
+#include "incl.hpp"
 
 Hero::Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nAnimSpeed, float fMovementSpeed) : AMove(STAND), fMovement_Speed(fMovementSpeed), nAnimation_Speed(nAnimSpeed),
  fBezwladnosc(0), fOpoznienie(fSilaTarcia) {
@@ -24,7 +25,7 @@ Hero::Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nA
 HeroCollisionCallback hero_collision_callback;
 
 void Hero::move(ANIMATIONS Anim, DIRECTION Direct) {
-	core::vector3df v = heroWireframe->getPosition();
+	Wektor v = heroWireframe->getPosition();
 
 	if (Anim != STAND)
 	{
@@ -54,36 +55,29 @@ void Hero::move(ANIMATIONS Anim, DIRECTION Direct) {
 		heroWireframe->setAnimationSpeed( nAnimation_Speed );
 	}
 	else if ((AMove == STAND || AMove == WALK) && Anim == DECELERATION) {
-         
-        heroWireframe->setFrameLoop(5, 5);
+		heroWireframe->setFrameLoop(5, 5);
 		heroWireframe->setAnimationSpeed( nAnimation_Speed ); 
-		
 		AMove = DECELERATION;
-         
-    }     
+	}
 	else if (Anim == STAND) {
 		heroWireframe->setFrameLoop(1, 1);
 		heroWireframe->setAnimationSpeed( nAnimation_Speed );
 		AMove = STAND;
-	}	   
+	}
 }
 
 void Hero::refreshState()
 {
-
+	// to tylko zalążek
 }
 
 void Hero::decelerate() 
 {
-     
-     fBezwladnosc -= fOpoznienie;
-     
-     fMovement_Speed = fBezwladnosc * fSzybkoscGracza;
-    
-     
-     move(DECELERATION, dKierunekRuchu);
-         
-}     
+	fBezwladnosc -= fOpoznienie;
+	fMovement_Speed = fBezwladnosc * fSzybkoscGracza;
+
+	move(DECELERATION, dKierunekRuchu);
+}
 
 Wektor Hero::getPosition() const
 {

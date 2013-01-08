@@ -1,5 +1,5 @@
-#include "naglowek.hpp"
-#include <cstdio>
+#include "precomp.hpp"
+#include "incl.hpp"
 
 int main()
 {

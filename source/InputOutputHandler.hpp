@@ -1,4 +1,5 @@
 #pragma once
+#include "precomp.hpp"
 
 class InputOutputHandler : public IEventReceiver {
 public:
