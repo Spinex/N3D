@@ -1,4 +1,5 @@
-#include "naglowek.hpp"
+#include "precomp.hpp"
+#include "incl.hpp"
 
 int sprawdzKat(DIRECTION dKierunek)
 {
