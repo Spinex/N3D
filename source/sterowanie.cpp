@@ -1,4 +1,5 @@
-#include "naglowek.hpp"
+#include "precomp.hpp"
+#include "incl.hpp"
 
 bool bBlokadaZapetlaniaAnimacjiSkakania = false;
 
