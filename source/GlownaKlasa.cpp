@@ -21,6 +21,32 @@ GlownaKlasa::GlownaKlasa() : direction(0), zdirection(0), bohaterGry(NULL) {
 		                      Wektor(fSkalaGraczaX, fSkalaGraczaY, fSkalaGraczaZ),
 		                      nSzybkoscAnimacjiGracza, fSzybkoscGracza);
 	}
+	
+	konsola = new ConsoleManager(device);
+	
+	
+	
+	stringw str;
+	
+	//instrukcje potrzebne w tym miejscu do sprawdzania funkcjonalnosci mojego detektora kolizji
+	
+	str = "left: false";	
+	konsola->addMessage(str);
+	str = "right: false";
+	konsola->addMessage(str);
+	str = "forward: false";
+	konsola->addMessage(str);
+	str = "back: false";
+	konsola->addMessage(str);
+	str = "up: false";
+	konsola->addMessage(str);
+	str = "down: false";
+	konsola->addMessage(str);
+	
+	str = "SideCollisionDetector is visible: true";
+	konsola->addMessage(str);
+	
+	
 	petlaGry();
 }
 
@@ -28,6 +54,7 @@ GlownaKlasa::~GlownaKlasa() {
 	device->drop();
 	metaSelector->drop();
 	delete bohaterGry;
+	delete konsola;
 }
 
 void GlownaKlasa::wczytajMapeIKolizje() {

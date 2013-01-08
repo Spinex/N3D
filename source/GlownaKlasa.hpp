@@ -20,6 +20,8 @@ private:
 	float zdirection;
 
 	Hero* bohaterGry;
+	
+	ConsoleManager* konsola;
 
 private:
 	void recursiveFillMetaSelector(scene::ISceneNode* node, scene::IMetaTriangleSelector* meta);   

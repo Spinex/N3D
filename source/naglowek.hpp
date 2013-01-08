@@ -3,6 +3,9 @@
 #include <irrlicht.h>
 #pragma comment(lib, "Irrlicht.lib")
 
+
+#include <vector>
+
 enum DIRECTION {
 	FORWARD = 4+1,
 	BACKWARD = 2+1,
@@ -27,6 +30,8 @@ enum ANIMATIONS {
 using namespace irr;
 using namespace irr::core; 
 using namespace irr::scene;
+
+using namespace std;
 
 using namespace core;
 using namespace scene;
@@ -66,5 +71,9 @@ extern bool bStanSkoku;
 typedef irr::core::vector3df Wektor;
 
 #include "InputOutputHandler.hpp"
+#include "SideCollisionDetector.hpp"
 #include "Hero.hpp"
+#include "ConsoleManager.hpp"
 #include "GlownaKlasa.hpp"
+
+

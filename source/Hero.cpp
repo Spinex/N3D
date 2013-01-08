@@ -88,6 +88,10 @@ void Hero::decelerate()
 Wektor Hero::getPosition() const
 {
 	// to tylko zalążek
-	return Wektor(0, 0, 0);
-	
+    //	return Wektor(0, 0, 0);
+
+    // Moja propozycja 
+    
+    return heroWireframe->getPosition();  
+ 	
 }

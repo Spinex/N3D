@@ -33,6 +33,8 @@ private:
 	float fBezwladnosc;
 	float fOpoznienie;
 	bool bJestMartwy;
+	
+	SideCollisionDetector znacznikiKolizji;
 
 public:
 	void rotate(float fValue) {fRotate = fValue;} 
@@ -50,6 +52,10 @@ public:
 	DIRECTION getDirection() const {return dKierunekRuchu;}  
 	ANIMATIONS getAnimation() const {return AMove;}
 	
+	
+	SideCollisionDetector& getZnacznikiKolizji() {return znacznikiKolizji;}
+	
+	float getRotation() const {return fRotate;}
 	float getMovementSpeed() const {return fMovement_Speed;}
 	float getBezwladnosc() const {return fBezwladnosc;}
 	
