@@ -180,3 +180,13 @@ std::vector<bool> SideCollisionDetector::getCollisionState()
 	
 	return stany;
 }
+
+SideCollisionDetector::~SideCollisionDetector()
+{
+	leftZnacznik->drop();
+	rightZnacznik->drop();
+	forwardZnacznik->drop();
+	backZnacznik->drop();
+	upZnacznik->drop();
+	downZnacznik->drop();
+}

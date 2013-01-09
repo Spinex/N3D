@@ -62,6 +62,7 @@ public:
 	
 public:
 	Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nAnimSpeed, float fMovementSpeed);
+	~Hero();
 	void refreshState();
 	Wektor getPosition() const;
 };    

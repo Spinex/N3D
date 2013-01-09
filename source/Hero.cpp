@@ -70,3 +70,8 @@ Wektor Hero::getPosition() const
 {
 	return heroWireframe->getPosition();
 }
+
+Hero::~Hero()
+{
+	anim->drop();
+}
