@@ -183,10 +183,10 @@ std::vector<bool> SideCollisionDetector::getCollisionState()
 
 SideCollisionDetector::~SideCollisionDetector()
 {
-	leftZnacznik->drop();
-	rightZnacznik->drop();
-	forwardZnacznik->drop();
-	backZnacznik->drop();
-	upZnacznik->drop();
-	downZnacznik->drop();
+	leftAnimator->drop();
+	rightAnimator->drop();
+	forwardAnimator->drop();
+	backAnimator->drop();
+	upAnimator->drop();
+	downAnimator->drop();
 }
