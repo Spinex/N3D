@@ -33,6 +33,6 @@ public:
 	std::vector<bool> getCollisionState();
 public:
 	SideCollisionDetector();
-	~SideCollisionDetector() {}
+	~SideCollisionDetector();
 
 };
