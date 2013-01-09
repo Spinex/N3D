@@ -2,9 +2,6 @@
 
 #pragma comment(lib, "Irrlicht.lib")
 
-
-#include <vector>
-
 enum DIRECTION {
 	FORWARD = 4+1,
 	BACKWARD = 2+1,

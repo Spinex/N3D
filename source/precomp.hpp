@@ -4,6 +4,7 @@
 #include <irrlicht.h>
 #include <cstdio>
 #include <map>
+#include <vector>
 #include <deque>
 
 #endif
