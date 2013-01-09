@@ -2,24 +2,24 @@
 #include "incl.hpp"
 
 Hero::Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nAnimSpeed, float fMovementSpeed) : AMove(STAND), fMovement_Speed(fMovementSpeed), nAnimation_Speed(nAnimSpeed),
- fBezwladnosc(0), fOpoznienie(fSilaTarcia) {
-					
+ fBezwladnosc(0), fOpoznienie(fSilaTarcia), fFallingSpeed(0), dKierunekRuchu(FORWARD), fRotate(Rotate), bStanSkoku(false) {
 	heroWireframe->setScale( skala );
 	heroWireframe->setPosition( pozycja );
-	heroWireframe->setRotation( core::vector3df( 180, Rotate, 0 ) ); 
+	heroWireframe->setRotation( Wektor( 180, Rotate, 0 ) ); 
 	
 	heroWireframe->setMaterialFlag( video::EMF_LIGHTING, false );
 	heroWireframe->setMaterialFlag( video::EMF_BACK_FACE_CULLING, false);
-	heroWireframe->setMaterialTexture( 0, _video->getTexture( Hero_Texture ) ); 
+	heroWireframe->setMaterialTexture( 0, internals.video()->getTexture( Hero_Texture ) ); 
 	
 	heroWireframe->setAnimationSpeed(nAnimSpeed);  
 	
 	heroWireframe->setFrameLoop(1,1);
 	
-	_anim = _menage->createCollisionResponseAnimator(_metaSelector, heroWireframe, core::vector3df(5,11,5), core::vector3df(0,-9.81f,0), core::vector3df(0,-13,0));
-	_anim->setCollisionCallback(&hero_collision_callback);
+  //anim = internals.scena()->createCollisionResponseAnimator(internals.selektor_trojkatow(), heroWireframe, Wektor(5,11,5), Wektor(0,-9.81f,0), Wektor(0,-13,0));
+    anim = internals.scena()->createCollisionResponseAnimator(internals.selektor_trojkatow(), heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0));
+	anim->setCollisionCallback(new HeroCollisionCallback());
 
-	heroWireframe->addAnimator(_anim);
+	heroWireframe->addAnimator(anim);
 }
 
 HeroCollisionCallback hero_collision_callback;
@@ -29,23 +29,11 @@ void Hero::move(ANIMATIONS Anim, DIRECTION Direct) {
 
 	if (Anim != STAND)
 	{
-		int angle;
-		switch(Direct)
-		{
-			case FORWARD: angle = 270; break;
-			case BACKWARD: angle = 90; break;
-			case LEFT: angle = 180; break;
-			case RIGHT: angle = 0; break;
-			case LEFT | FORWARD: angle = 180 + 45; break;
-			case RIGHT | FORWARD: angle = 0 - 45; break;
-			case LEFT | BACKWARD: angle = 180 - 45; break;
-			case RIGHT | BACKWARD: angle = 0 + 45; break;
-			default: angle = 270; break;
-		}
-		v.Z += fMovement_Speed * cos(( PI * (fRotate - 90 + angle)) / 180);
-		v.X += fMovement_Speed * sin(( PI * (fRotate - 90 + angle)) / 180);
+		int angle = sprawdzKat(Direct);
+		v.Z += fMovement_Speed * cos(( core::PI * (fRotate - 90 + angle)) / 180);
+		v.X += fMovement_Speed * sin(( core::PI * (fRotate - 90 + angle)) / 180);
 		heroWireframe->setPosition( v );
-		heroWireframe->setRotation( core::vector3df( 180, fRotate + angle, 0 ) );
+		heroWireframe->setRotation( Wektor( 180, fRotate + angle, 0 ) );
 	}
 
 	if ((AMove == STAND || AMove == DECELERATION) && Anim == WALK) {
@@ -81,11 +69,26 @@ void Hero::decelerate()
 
 Wektor Hero::getPosition() const
 {
-	// to tylko zalążek
-    //	return Wektor(0, 0, 0);
-
-    // Moja propozycja 
-    
-    return heroWireframe->getPosition();  
- 	
+	return heroWireframe->getPosition();
 }
+
+Hero::~Hero()
+{
+	anim->drop();
+}
+
+void Hero::fallDown()
+{
+    fGravityAcceleration = 0.2;     
+    Wektor v = heroWireframe->getPosition();
+    v.Y -= fFallingSpeed;
+    heroWireframe->setPosition( v );
+    fFallingSpeed += fGravityAcceleration;
+} 
+
+void Hero::jump()
+{
+   	core::vector3df v = heroWireframe->getPosition();
+    v.Y += fSilaSkoku;
+    heroWireframe->setPosition(v);
+} 

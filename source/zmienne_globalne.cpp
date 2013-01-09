@@ -1,18 +1,18 @@
 #include "precomp.hpp"
 #include "incl.hpp"
 
-IAnimatedMesh* heroMesh = NULL;
-IAnimatedMeshSceneNode* heroWireframe = NULL;
-video::IVideoDriver* _video = NULL;
+// od teraz definicje wszystkich zmiennych globalnych dla całego pliku
+// (to znaczy razem z externem w nagłówku) umieszczamy tutaj
+// gdyż łatwiej je wytępić gdy będzie trzeba
+// a także nie będzie problemu z tzw. "static initialization order fiasco"
+// czyli problemami z niezdefiniowaną kolejnością wywołania konstruktorów
 
-scene::IMetaTriangleSelector* _metaSelector = NULL;
-scene::ISceneNodeAnimatorCollisionResponse* _anim = NULL;
-scene::ISceneManager* _menage = NULL;
+scene::IAnimatedMesh* heroMesh = NULL;
+scene::IAnimatedMeshSceneNode* heroWireframe = NULL;
+scene::ISceneNodeAnimatorCollisionResponse* anim = NULL;
 
-
-
-const path Hero_Mesh = "postacie/bohater.b3d";
-const path Hero_Texture = "postacie/bohatertekstura.png";
+const io::path Hero_Mesh = "postacie/bohater.b3d";
+const io::path Hero_Texture = "postacie/bohatertekstura.png";
 
 float fPozycjaGraczaX = 7;
 float fPozycjaGraczaY = 80;
@@ -29,7 +29,10 @@ float fSilaSkoku = 4;
 float fSilaTarcia = 0.04;
 
 float fSzybkoscGracza = 1.4;
-unsigned nSzybkoscAnimacjiGracza = static_cast<unsigned>(fSzybkoscGracza * 33.3);
+unsigned nSzybkoscAnimacjiGracza = fSzybkoscGracza * 33.3;
 
 
 EKEY_CODE klawiszSkoku = irr::KEY_SPACE;
+
+
+IrrlichtInternals internals;
