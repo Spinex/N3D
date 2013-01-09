@@ -27,21 +27,11 @@ enum ANIMATIONS {
 };
 
 using namespace irr;
-using namespace irr::core; 
-using namespace irr::scene;
 
-using namespace std;
-
-using namespace core;
-using namespace scene;
-using namespace video;
-using namespace io;
-using namespace gui;
-
-extern IAnimatedMesh* heroMesh;
-extern IAnimatedMeshSceneNode* heroWireframe;
-extern const path Hero_Mesh;
-extern const path Hero_Texture;
+extern scene::IAnimatedMesh* heroMesh;
+extern scene::IAnimatedMeshSceneNode* heroWireframe;
+extern const io::path Hero_Mesh;
+extern const io::path Hero_Texture;
 
 extern float fPozycjaGraczaX;
 extern float fPozycjaGraczaY;
@@ -55,11 +45,7 @@ extern float fObrotGraczaY;
 extern float fSzybkoscGracza;
 extern unsigned nSzybkoscAnimacjiGracza;
 
-extern video::IVideoDriver* _video;
-
-extern scene::IMetaTriangleSelector* _metaSelector;
-extern scene::ISceneNodeAnimatorCollisionResponse* _anim;
-extern scene::ISceneManager * _menage;
+extern scene::ISceneNodeAnimatorCollisionResponse* anim;
 extern EKEY_CODE klawiszSkoku;
 
 
@@ -73,6 +59,6 @@ typedef irr::core::vector3df Wektor;
 #include "SideCollisionDetector.hpp"
 #include "Hero.hpp"
 #include "ConsoleManager.hpp"
-#include "GlownaKlasa.hpp"
+#include "IrrlichtInternals.hpp"
 
 

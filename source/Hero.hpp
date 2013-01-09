@@ -11,11 +11,11 @@ public:
 	virtual ~Entity() {}
 };
 
-class HeroCollisionCallback : public ICollisionCallback
+class HeroCollisionCallback : public scene::ICollisionCallback
 {
-	bool onCollision(const ISceneNodeAnimatorCollisionResponse & animator)
+	bool onCollision(const scene::ISceneNodeAnimatorCollisionResponse & animator)
 	{
-		const ISceneNode* collided_node = animator.getCollisionNode();
+		const scene::ISceneNode* collided_node = animator.getCollisionNode();
 		printf("CLD %d ", collided_node->getID());
 		if (collided_node->getID() == 1337) exit(0);
 		return false;

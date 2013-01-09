@@ -3,64 +3,62 @@
 
 bool bBlokadaZapetlaniaAnimacjiSkakania = false;
 
-void GlownaKlasa::sterowaniePostacia() {
-     
-     	// Sprawdzanie stanu kolizji
+void IrrlichtInternals::sterowaniePostacia() {
+
+	// Sprawdzanie stanu kolizji
 	
-	vector<bool> bStany = bohaterGry->getZnacznikiKolizji().getCollisionState();
+	std::vector<bool> bStany = bohaterGry->getZnacznikiKolizji().getCollisionState();
 	
-	bool bCzyJestWidoczny = true;
+	// do przyszłego użytku
+	//bool bCzyJestWidoczny = true;
 	
 	// Blad - Kiedy ustawia sie na niewidoczny, detektor przestaje dzialac.
 	
- /*	if (aktywne.IsKeyDown( irr::KEY_KEY_Q ))
+	/*if (aktywne.IsKeyDown( irr::KEY_KEY_Q ))
 	{
-                
-        if (bCzyJestWidoczny) bCzyJestWidoczny = false;    
-        else bCzyJestWidoczny = true;    
-        
-        bohaterGry->getZnacznikiKolizji().setVisible(bCzyJestWidoczny);                   
-    }    */                   
+		bCzyJestWidoczny = !bCzyJestWidoczny;  
+		bohaterGry->getZnacznikiKolizji().setVisible(bCzyJestWidoczny);                   
+	}*/
 	
-	stringw str;
+	core::stringw str;
 	
 	if (bStany[0]) str = "left: true";  
 	else str = "left: false";
-        konsola->setMessage(0, str);
-        
-    if (bStany[1]) str = "right: true";  
+		konsola->setMessage(0, str);
+
+	if (bStany[1]) str = "right: true";  
 	else str = "right: false";
-        konsola->setMessage(1, str);  
-          
-    if (bStany[2]) str = "forward: true";  
+		konsola->setMessage(1, str);  
+
+	if (bStany[2]) str = "forward: true";  
 	else str = "forward: false";
-        konsola->setMessage(2, str);
-        
-    if (bStany[3]) str = "back: true";  
+		konsola->setMessage(2, str);
+
+	if (bStany[3]) str = "back: true";  
 	else str = "back: false";
-        konsola->setMessage(3, str);
-        
-    if (bStany[4]) str = "up: true";  
+		konsola->setMessage(3, str);
+
+	if (bStany[4]) str = "up: true";  
 	else str = "up: false";
-        konsola->setMessage(4, str);
-        
-    if (bStany[5]) str = "down: true";  
+		konsola->setMessage(4, str);
+
+	if (bStany[5]) str = "down: true";  
 	else str = "down: false";
-        konsola->setMessage(5, str);
-        
-    // *************************************************************************************************************    
-     
-     
+		konsola->setMessage(5, str);
+
+	// *************************************************************************************************************    
+
+
 	//Roboczo na szybko, pozniej zaimplementuje sie skakanie do metody Move() 
 	// Odtad **********************************************************************************************************
 
-	if ( aktywne.IsKeyDown( klawiszSkoku ) && !bStanSkoku && _anim->collisionOccurred() ) {
+	if (aktywne.IsKeyDown( klawiszSkoku ) && !bStanSkoku && anim->collisionOccurred() ) {
 		bStanSkoku = true;
 		// heroWireframe->setFrameLoop(45, 60);
 		// heroWireframe->setAnimationSpeed(nSzybkoscAnimacjiGracza / 3);
 		bBlokadaZapetlaniaAnimacjiSkakania = false;
-	}   
-	else if (_anim->collisionOccurred()) {
+	}
+	else if (anim->collisionOccurred()) {
 		bStanSkoku = false;
 	}
 	
@@ -83,29 +81,13 @@ void GlownaKlasa::sterowaniePostacia() {
 	 
 	int player_direction = 0;
 	if ( aktywne.IsKeyDown( irr::KEY_KEY_W ) )
-	{
 		player_direction |= FORWARD;
-		bohaterGry->setBezwladnosc(1);
-		bohaterGry->resetAnimAndSpeed();
-    }	
 	if ( aktywne.IsKeyDown( irr::KEY_KEY_S ) )
-	{
 		player_direction |= BACKWARD;
-		bohaterGry->setBezwladnosc(1);
-		bohaterGry->resetAnimAndSpeed();
-    }	
 	if ( aktywne.IsKeyDown( irr::KEY_KEY_A ) )
-	{
 		player_direction |= LEFT;
-		bohaterGry->setBezwladnosc(1);
-		bohaterGry->resetAnimAndSpeed();
-    }	
 	if ( aktywne.IsKeyDown( irr::KEY_KEY_D ) )
-	{
 		player_direction |= RIGHT;
-		bohaterGry->setBezwladnosc(1);
-		bohaterGry->resetAnimAndSpeed();
-    }	
 
 	//nic się nie zmieniło
 	if(player_direction == 0) {
@@ -120,16 +102,15 @@ void GlownaKlasa::sterowaniePostacia() {
 		moveCameraControl(true);
 		return;
 	}
-	bohaterGry->setDirection(static_cast<DIRECTION>(player_direction));
-	
-	bohaterGry->getZnacznikiKolizji().setPosition(bohaterGry->getPosition(), bohaterGry->getRotation(), bohaterGry->getDirection()); 
-    bohaterGry->getZnacznikiKolizji().setRotation(bohaterGry->getRotation(), bohaterGry->getDirection());
-    
-    
-	bohaterGry->move(WALK, bohaterGry->getDirection());
-	moveCameraControl(false);
-	
-	
-                   
-	
+	else {
+		bohaterGry->setBezwladnosc(1);
+		bohaterGry->resetAnimAndSpeed();
+		bohaterGry->setDirection(static_cast<DIRECTION>(player_direction));
+		
+		bohaterGry->getZnacznikiKolizji().setPosition(bohaterGry->getPosition(), bohaterGry->getRotation(), bohaterGry->getDirection()); 
+		bohaterGry->getZnacznikiKolizji().setRotation(bohaterGry->getRotation(), bohaterGry->getDirection());
+
+		bohaterGry->move(WALK, bohaterGry->getDirection());
+		moveCameraControl(false);
+	}
 }
