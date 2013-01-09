@@ -1,20 +1,20 @@
 #include "precomp.hpp"
 #include "incl.hpp"
 
-void GlownaKlasa::petlaGry()
+void IrrlichtInternals::petlaGry()
 {
-	while(device->run())
+	while(device()->run())
 	{
 		if(aktywne.IsKeyDown( irr::KEY_ESCAPE ))
 			break;
 
 		sterowaniePostacia();
 
-		video->beginScene( true, true, video::SColor( 0, 0, 10, 200 ) );
-		menage->drawAll();
+		video()->beginScene( true, true, video::SColor( 0, 0, 10, 200 ) );
+		scena()->drawAll();
 		
 		konsola->showMessages();
 		
-		video->endScene();
+		video()->endScene();
 	}
 }
