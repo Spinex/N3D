@@ -2,7 +2,7 @@
 #include "incl.hpp"
 
 Hero::Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nAnimSpeed, float fMovementSpeed) : AMove(STAND), fMovement_Speed(fMovementSpeed), nAnimation_Speed(nAnimSpeed),
- fBezwladnosc(0), fOpoznienie(fSilaTarcia) {
+ fBezwladnosc(0), fOpoznienie(fSilaTarcia), fFallingSpeed(0), dKierunekRuchu(FORWARD), fRotate(Rotate), bStanSkoku(false) {
 	heroWireframe->setScale( skala );
 	heroWireframe->setPosition( pozycja );
 	heroWireframe->setRotation( Wektor( 180, Rotate, 0 ) ); 
@@ -15,7 +15,7 @@ Hero::Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nA
 	
 	heroWireframe->setFrameLoop(1,1);
 	
-	anim = internals.scena()->createCollisionResponseAnimator(internals.selektor_trojkatow(), heroWireframe, Wektor(5,11,5), Wektor(0,-9.81f,0), Wektor(0,-13,0));
+	anim = internals.scena()->createCollisionResponseAnimator(internals.selektor_trojkatow(), heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0));
 	anim->setCollisionCallback(new HeroCollisionCallback());
 
 	heroWireframe->addAnimator(anim);
@@ -75,3 +75,19 @@ Hero::~Hero()
 {
 	anim->drop();
 }
+
+void Hero::fallDown()
+{
+    fGravityAcceleration = 0.2;     
+    Wektor v = heroWireframe->getPosition();
+    v.Y -= fFallingSpeed;
+    heroWireframe->setPosition( v );
+    fFallingSpeed += fGravityAcceleration;
+} 
+
+void Hero::jump()
+{
+   core::vector3df v = heroWireframe->getPosition();
+   v.Y += fSilaSkoku;
+   heroWireframe->setPosition(v);
+}         
