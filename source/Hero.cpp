@@ -1,8 +1,22 @@
 #include "precomp.hpp"
 #include "incl.hpp"
 
-Hero::Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nAnimSpeed, float fMovementSpeed) : AMove(STAND), fMovement_Speed(fMovementSpeed), nAnimation_Speed(nAnimSpeed),
- fBezwladnosc(0), fOpoznienie(fSilaTarcia), fFallingSpeed(0), dKierunekRuchu(FORWARD), fRotate(Rotate), bStanSkoku(false) {
+Hero::Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nAnimSpeed, float fMovementSpeed) :
+	fRotate(Rotate),
+	dKierunekRuchu(FORWARD),
+	AMove(STAND),
+	fMovement_Speed(fMovementSpeed),
+	nAnimation_Speed(nAnimSpeed),
+	fBezwladnosc(0),
+	fOpoznienie(fSilaTarcia),
+	bJestMartwy(false),
+	bStanSkoku(false),
+	fFallingSpeed(0),
+	heroWireframe(NULL)
+{
+	heroWireframe = internals.scena()->addAnimatedMeshSceneNode(heroMesh);
+	if(!heroWireframe)
+		{} //wywal program na zbity pysk (ewentualnie grzecznie zgłoś błąd)
 	heroWireframe->setScale( skala );
 	heroWireframe->setPosition( pozycja );
 	heroWireframe->setRotation( Wektor( 180, Rotate, 0 ) ); 
@@ -91,3 +105,13 @@ void Hero::jump()
    v.Y += fSilaSkoku;
    heroWireframe->setPosition(v);
 }         
+
+void DumbDrone::refreshState()
+{
+	// to tylko zalążek
+}
+
+void DumbDrone::recalculate_waypoints()
+{
+	// to tylko zalążek
+}

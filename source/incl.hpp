@@ -2,6 +2,10 @@
 
 #pragma comment(lib, "Irrlicht.lib")
 
+// wiem, że mówiłem o zasadzie "biblioteki standardowe wstawiać do precomp.hpp"
+// ale ten jeden plik nagłówkowy jest wyjątkowy i nie może być w prekompilowanym nagłówku
+#include <cassert>
+
 enum DIRECTION {
 	FORWARD = 4+1,
 	BACKWARD = 2+1,
@@ -26,29 +30,26 @@ enum ANIMATIONS {
 using namespace irr;
 
 extern scene::IAnimatedMesh* heroMesh;
-extern scene::IAnimatedMeshSceneNode* heroWireframe;
 extern const io::path Hero_Mesh;
 extern const io::path Hero_Texture;
 
-extern float fPozycjaGraczaX;
-extern float fPozycjaGraczaY;
-extern float fPozycjaGraczaZ;
-extern float fSkalaGraczaX;
-extern float fSkalaGraczaY;
-extern float fSkalaGraczaZ;
+extern const float fPozycjaGraczaX;
+extern const float fPozycjaGraczaY;
+extern const float fPozycjaGraczaZ;
+extern const float fSkalaGraczaX;
+extern const float fSkalaGraczaY;
+extern const float fSkalaGraczaZ;
 
 extern float fObrotGraczaY;
 
-extern float fSzybkoscGracza;
-extern unsigned nSzybkoscAnimacjiGracza;
+extern const float fSzybkoscGracza;
+extern const unsigned nSzybkoscAnimacjiGracza;
 
 extern scene::ISceneNodeAnimatorCollisionResponse* anim;
-extern EKEY_CODE klawiszSkoku;
+extern const EKEY_CODE klawiszSkoku;
 
-
-extern float fSilaTarcia;
-extern float fSilaSkoku;
-extern bool bStanSkoku;
+extern const float fSilaTarcia;
+extern const float fSilaSkoku;
 
 typedef irr::core::vector3df Wektor;
 

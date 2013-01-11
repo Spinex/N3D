@@ -40,6 +40,7 @@ private:
 	float fGravityAcceleration;
 	
 	SideCollisionDetector znacznikiKolizji;
+	scene::IAnimatedMeshSceneNode* heroWireframe;
 	
 public:
     void fallDown();
@@ -80,4 +81,16 @@ public:
 
 class Thwump : public Entity {
 
+};
+
+class DumbDrone : public Entity {
+	std::vector<Wektor> waypoints;
+	std::size_t current;
+	scene::IAnimatedMeshSceneNode* wireframe;
+
+	void refreshState();
+};
+
+class IntelligentDrone : public Entity {
+	void recalculate_waypoints();
 };
