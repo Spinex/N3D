@@ -46,38 +46,31 @@ void IrrlichtInternals::sterowaniePostacia() {
 	else str = "down: false";
 		konsola->setMessage(5, str);
 
-	// *************************************************************************************************************    
-
-
-	//Roboczo na szybko, pozniej zaimplementuje sie skakanie do metody Move() 
-	// Odtad **********************************************************************************************************
-
-	if (aktywne.IsKeyDown( klawiszSkoku ) && !bStanSkoku && anim->collisionOccurred() ) {
-		bStanSkoku = true;
-		// heroWireframe->setFrameLoop(45, 60);
-		// heroWireframe->setAnimationSpeed(nSzybkoscAnimacjiGracza / 3);
-		bBlokadaZapetlaniaAnimacjiSkakania = false;
-	}
-	else if (anim->collisionOccurred()) {
-		bStanSkoku = false;
-	}
-	
-	if (bStanSkoku) {
-		if (heroWireframe->getFrameNr() >= 55 && !bBlokadaZapetlaniaAnimacjiSkakania) {
-			heroWireframe->setFrameLoop(60,60);
-			bBlokadaZapetlaniaAnimacjiSkakania = true;
-		}
-		core::vector3df v = heroWireframe->getPosition();
-
-		v.Y += fSilaSkoku;
-		heroWireframe->setPosition(v);
-
-		moveCameraControl(false);
-	}
-	else
-		bBlokadaZapetlaniaAnimacjiSkakania = false;
-
-	//Dotad *************************************************************************************************************
+       if(!bStany[5])
+       {
+         bohaterGry->fallDown();
+         bohaterGry->getZnacznikiKolizji().setPosition(bohaterGry->getPosition(), bohaterGry->getRotation(), bohaterGry->getDirection());   
+         bohaterGry->getZnacznikiKolizji().setRotation(bohaterGry->getRotation(), bohaterGry->getDirection());
+       }     
+       else
+       {   
+         bohaterGry->stopFallingDown();  
+         bohaterGry->getZnacznikiKolizji().setPosition(bohaterGry->getPosition(), bohaterGry->getRotation(), bohaterGry->getDirection());   
+         bohaterGry->getZnacznikiKolizji().setRotation(bohaterGry->getRotation(), bohaterGry->getDirection());  
+       }      
+        
+    
+       if ( aktywne.IsKeyDown( klawiszSkoku ) && !bohaterGry->getJumpState() && bStany[5])  
+       { 
+         bohaterGry->setJumpState(true);
+         bohaterGry->stopFallingDown();  
+       }     
+       else if (bStany[5] || bStany[4]) bohaterGry->setJumpState(false);	
+       if (bohaterGry->getJumpState())
+       {
+	 bohaterGry->jump();
+	 moveCameraControl(false);
+       }
 	 
 	int player_direction = 0;
 	if ( aktywne.IsKeyDown( irr::KEY_KEY_W ) )
