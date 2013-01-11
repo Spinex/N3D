@@ -35,8 +35,18 @@ private:
 	float fOpoznienie;
 	bool bJestMartwy;
 	
+	bool bStanSkoku;
+	float fFallingSpeed;
+	float fGravityAcceleration;
+	
 	SideCollisionDetector znacznikiKolizji;
-
+	
+public:
+    void fallDown();
+    void stopFallingDown() {fFallingSpeed = 0;}   
+    void setJumpState(bool bV) {bStanSkoku = bV;}
+    bool getJumpState() {return bStanSkoku;}
+    void jump();
 public:
 	void rotate(float fValue) {fRotate = fValue;} 
 	void move(ANIMATIONS Anim, DIRECTION Direct); 
