@@ -111,7 +111,7 @@ void DumbDrone::refreshState()
 	// to tylko zalążek
 }
 
-void DumbDrone::recalculate_waypoints()
+void IntelligentDrone::recalculate_waypoints()
 {
 	// to tylko zalążek
 }
