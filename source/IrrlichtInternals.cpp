@@ -15,7 +15,11 @@ IrrlichtInternals::IrrlichtInternals() :
 	_device = createDevice( video::EDT_OPENGL, core::dimension2d<u32>( 800, 600 ), 32, false, false, true, &aktywne );
 	_video = device()->getVideoDriver();
 	_menage = device()->getSceneManager();
+<<<<<<< HEAD
 	_kam = _menage->addCameraSceneNode(0, core::vector3df(0.0f,0.0f,0.0f) , core::vector3df(0.0f,0.0f,0.0f), -1);
+=======
+	_kam = _menage->addCameraSceneNode(0, Wektor(0.0f,0.0f,0.0f) , Wektor(0.0f,0.0f,0.0f), -1);
+>>>>>>> 29bc7c1274edef6c285aa13df94682ddfd7b024d
 	//FILE* file = freopen("stdout.txt", "w", stdout);
 	// _kam = menage->addCameraSceneNodeFPS();
 
@@ -135,7 +139,11 @@ void IrrlichtInternals::recursiveFillMetaSelector(scene::ISceneNode* node, scene
 
 void IrrlichtInternals::moveCameraControl(bool bMove) {
 	core::position2d<f32> cursorPos = device()->getCursorControl()->getRelativePosition();
+<<<<<<< HEAD
 	//core::vector3df cameraPos = _kam->getAbsolutePosition();
+=======
+	//Wektor cameraPos = _kam->getAbsolutePosition();
+>>>>>>> 29bc7c1274edef6c285aa13df94682ddfd7b024d
 	
 	float change_x = ( cursorPos.X - 0.5 ) * 64.0f;
 	float change_y = ( cursorPos.Y - 0.5 ) * 64.0f;
@@ -147,22 +155,36 @@ void IrrlichtInternals::moveCameraControl(bool bMove) {
 		zdirection = -10;
 	device()->getCursorControl()->setPosition( 0.5f, 0.5f );
 
+<<<<<<< HEAD
 	core::vector3df playerPos = heroWireframe->getPosition();
+=======
+	Wektor playerPos = bohaterGry->getPosition();
+>>>>>>> 29bc7c1274edef6c285aa13df94682ddfd7b024d
 
 	float xf = playerPos.X - cos( direction * core::PI / 180.0f ) * 32.0f;
 	float yf = playerPos.Y - sin( zdirection * core::PI / 180.0f ) * 32.0f;
 	float zf = playerPos.Z + sin( direction * core::PI / 180.0f ) * 32.0f;
 
+<<<<<<< HEAD
 	_kam->setPosition( core::vector3df( xf, yf, zf ) );
 	_kam->setTarget( core::vector3df( playerPos.X, playerPos.Y + 10.0f, playerPos.Z ) );
+=======
+	_kam->setPosition( Wektor( xf, yf, zf ) );
+	_kam->setTarget( Wektor( playerPos.X, playerPos.Y + 10.0f, playerPos.Z ) );
+>>>>>>> 29bc7c1274edef6c285aa13df94682ddfd7b024d
 
 	if (bMove == false)
 		bohaterGry->rotate(direction - 90);
 }
 
 void IrrlichtInternals::wczytajModelITekstureBohatera() {
+<<<<<<< HEAD
 	if (!heroMesh && !heroWireframe) {
 		heroMesh = scena()->getMesh(Hero_Mesh);
 		heroWireframe = scena()->addAnimatedMeshSceneNode(heroMesh);
+=======
+	if (!heroMesh) {
+		heroMesh = scena()->getMesh(Hero_Mesh);
+>>>>>>> 29bc7c1274edef6c285aa13df94682ddfd7b024d
 	}
 }

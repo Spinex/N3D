@@ -38,16 +38,26 @@ private:
 	bool bStanSkoku;
 	float fFallingSpeed;
 	float fGravityAcceleration;
+<<<<<<< HEAD
 		
 	SideCollisionDetector znacznikiKolizji;
+=======
+	
+	SideCollisionDetector znacznikiKolizji;
+	scene::IAnimatedMeshSceneNode* heroWireframe;
+>>>>>>> 29bc7c1274edef6c285aa13df94682ddfd7b024d
 	
 public:
     void fallDown();
     void stopFallingDown() {fFallingSpeed = 0;}   
     void setJumpState(bool bV) {bStanSkoku = bV;}
     bool getJumpState() {return bStanSkoku;}
+<<<<<<< HEAD
     void jump();	
 
+=======
+    void jump();
+>>>>>>> 29bc7c1274edef6c285aa13df94682ddfd7b024d
 public:
 	void rotate(float fValue) {fRotate = fValue;} 
 	void move(ANIMATIONS Anim, DIRECTION Direct); 
@@ -81,4 +91,16 @@ public:
 
 class Thwump : public Entity {
 
+};
+
+class DumbDrone : public Entity {
+	std::vector<Wektor> waypoints;
+	std::size_t current;
+	scene::IAnimatedMeshSceneNode* wireframe;
+
+	void refreshState();
+};
+
+class IntelligentDrone : public Entity {
+	void recalculate_waypoints();
 };
