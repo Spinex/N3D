@@ -1,10 +1,6 @@
 #include "precomp.hpp"
 #include "incl.hpp"
 
-<<<<<<< HEAD
-Hero::Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nAnimSpeed, float fMovementSpeed) : AMove(STAND), fMovement_Speed(fMovementSpeed), nAnimation_Speed(nAnimSpeed),
- fBezwladnosc(0), fOpoznienie(fSilaTarcia), fFallingSpeed(0), dKierunekRuchu(FORWARD), fRotate(Rotate), bStanSkoku(false) {
-=======
 Hero::Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nAnimSpeed, float fMovementSpeed) :
 	fRotate(Rotate),
 	dKierunekRuchu(FORWARD),
@@ -21,7 +17,6 @@ Hero::Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nA
 	heroWireframe = internals.scena()->addAnimatedMeshSceneNode(heroMesh);
 	if(!heroWireframe)
 		{} //wywal program na zbity pysk (ewentualnie grzecznie zgłoś błąd)
->>>>>>> 29bc7c1274edef6c285aa13df94682ddfd7b024d
 	heroWireframe->setScale( skala );
 	heroWireframe->setPosition( pozycja );
 	heroWireframe->setRotation( Wektor( 180, Rotate, 0 ) ); 
@@ -34,12 +29,7 @@ Hero::Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nA
 	
 	heroWireframe->setFrameLoop(1,1);
 	
-<<<<<<< HEAD
-  //anim = internals.scena()->createCollisionResponseAnimator(internals.selektor_trojkatow(), heroWireframe, Wektor(5,11,5), Wektor(0,-9.81f,0), Wektor(0,-13,0));
-    anim = internals.scena()->createCollisionResponseAnimator(internals.selektor_trojkatow(), heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0));
-=======
 	anim = internals.scena()->createCollisionResponseAnimator(internals.selektor_trojkatow(), heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0));
->>>>>>> 29bc7c1274edef6c285aa13df94682ddfd7b024d
 	anim->setCollisionCallback(new HeroCollisionCallback());
 
 	heroWireframe->addAnimator(anim);
@@ -111,16 +101,27 @@ void Hero::fallDown()
 
 void Hero::jump()
 {
-<<<<<<< HEAD
-   	core::vector3df v = heroWireframe->getPosition();
-    v.Y += fSilaSkoku;
-    heroWireframe->setPosition(v);
-} 
-=======
    core::vector3df v = heroWireframe->getPosition();
    v.Y += fSilaSkoku;
    heroWireframe->setPosition(v);
-}         
+}   
+
+/* void Hero::invertDirection()
+{
+   switch (dKierunekRuchu)
+   {
+      case FORWARD: dKierunekRuchu = BACKWARD; break;
+	  case BACKWARD: dKierunekRuchu = FORWARD; break;
+	  case LEFT: dKierunekRuchu = RIGHT; break;
+	  case RIGHT: dKierunekRuchu = LEFT; break;
+	  case UP: dKierunekRuchu = DOWN; break;
+	  case DOWN: dKierunekRuchu = UP; break;
+	  case LEFT | FORWARD: dKierunekRuchu = RIGHTBACKWARD; break;
+	  case RIGHT | FORWARD: dKierunekRuchu = LEFTBACKWARD; break;
+	  case LEFT | BACKWARD: dKierunekRuchu = RIGHTFORWARD; break;
+	  case RIGHT | BACKWARD: dKierunekRuchu = LEFTFORWARD; break;
+   }	  
+} */     
 
 void DumbDrone::refreshState()
 {
@@ -131,4 +132,3 @@ void IntelligentDrone::recalculate_waypoints()
 {
 	// to tylko zalążek
 }
->>>>>>> 29bc7c1274edef6c285aa13df94682ddfd7b024d
