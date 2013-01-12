@@ -6,6 +6,9 @@ bool bBlokadaZapetlaniaAnimacjiSkakania = false;
 void IrrlichtInternals::sterowaniePostacia() {
 
 	// Sprawdzanie stanu kolizji
+
+	// sztuczna "inteligencja" drona
+	drone->refreshState();
 	
 	std::vector<bool> bStany = bohaterGry->getZnacznikiKolizji().getCollisionState();
 	

@@ -17,7 +17,8 @@ private:
 	float direction;
 	float zdirection;
 
-	Hero* bohaterGry;
+	std::unique_ptr<Hero> bohaterGry;
+	std::unique_ptr<Entity> drone;
 	ConsoleManager* konsola;
 
 private:

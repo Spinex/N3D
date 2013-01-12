@@ -9,8 +9,7 @@ IrrlichtInternals::IrrlichtInternals() :
 	_menage(NULL),
 	_kam(NULL),
 	direction(0),
-	zdirection(0),
-	bohaterGry(NULL)
+	zdirection(0)
 {
 	_device = createDevice( video::EDT_OPENGL, core::dimension2d<u32>( 800, 600 ), 32, false, false, true, &aktywne );
 	_video = device()->getVideoDriver();
@@ -23,7 +22,8 @@ IrrlichtInternals::IrrlichtInternals() :
 	device()->getCursorControl()->setVisible(false);
 	if (!bohaterGry) {
 		wczytajModelITekstureBohatera();
-		bohaterGry = new Hero(fSzybkoscGracza, fObrotGraczaY, Wektor(fPozycjaGraczaX, fPozycjaGraczaY, fPozycjaGraczaZ), Wektor(fSkalaGraczaX, fSkalaGraczaY, fSkalaGraczaZ), nSzybkoscAnimacjiGracza, fSzybkoscGracza);
+		bohaterGry.reset(new Hero(fSzybkoscGracza, fObrotGraczaY, Wektor(fPozycjaGraczaX, fPozycjaGraczaY, fPozycjaGraczaZ), Wektor(fSkalaGraczaX, fSkalaGraczaY, fSkalaGraczaZ), nSzybkoscAnimacjiGracza, fSzybkoscGracza));
+		drone.reset(new DumbDrone(Wektor(186.739929, 39.554573, 126.878952)));
 	}
 	
 	konsola = new ConsoleManager(device());
@@ -57,7 +57,6 @@ IrrlichtInternals::IrrlichtInternals() :
 IrrlichtInternals::~IrrlichtInternals() {
 	_device->drop();
 	_metaSelector->drop();
-	delete bohaterGry;
 	delete konsola;
 	//fclose(file);
 }

@@ -123,9 +123,33 @@ void Hero::jump()
    }	  
 } */     
 
+DumbDrone::DumbDrone(Wektor starting_location) :
+	current(0)
+{
+	auto* mesh = internals.scena()->getMesh("postacie/drone.stl"); //auto - nowa funkcjonalność C++11
+	wireframe = internals.scena()->addAnimatedMeshSceneNode(mesh);
+	if(!wireframe)
+		{} //wywal program na zbity pysk (ewentualnie grzecznie zgłoś błąd)
+	wireframe->setScale( Wektor(-5, -5, -5) );
+	wireframe->setPosition( starting_location );
+	wireframe->setRotation( Wektor( 180, 42, 0 ) ); 
+
+	//wireframe->setMaterialFlag( video::EMF_LIGHTING, false );
+	//wireframe->setMaterialFlag( video::EMF_BACK_FACE_CULLING, false);
+	//wireframe->setMaterialTexture( 0, internals.video()->getTexture( Hero_Texture ) ); 
+
+	//sample locations to move
+	waypoints.push_back(Wektor(199.250015, 38.954994, -169.493530));
+	waypoints.push_back(Wektor(-155.748276, 39.555645, -140.499557));
+	waypoints.push_back(Wektor(-183.163818, 40.155643, 111.872986));
+	waypoints.push_back(starting_location);
+}
+
 void DumbDrone::refreshState()
 {
-	// to tylko zalążek
+	Wektor kierunek = (currentTarget() - getPosition()).normalize();
+	wireframe->setPosition(getPosition() + kierunek * 0.4);
+	if(getPosition().equals(currentTarget(), 1.2)) followNextTarget();
 }
 
 void IntelligentDrone::recalculate_waypoints()

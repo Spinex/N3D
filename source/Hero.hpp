@@ -85,11 +85,23 @@ class Thwump : public Entity {
 };
 
 class DumbDrone : public Entity {
+private:
 	std::vector<Wektor> waypoints;
 	std::size_t current;
 	scene::IAnimatedMeshSceneNode* wireframe;
 
+	void followNextTarget() { current = (current+1)%waypoints.size(); }
+	Wektor currentTarget() { return waypoints[current]; }
+public:
 	void refreshState();
+
+	DumbDrone(Wektor starting_location);
+
+	Wektor getPosition() const
+	{
+		return wireframe->getPosition();
+	}
+
 };
 
 class IntelligentDrone : public Entity {
