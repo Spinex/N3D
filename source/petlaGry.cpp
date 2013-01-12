@@ -18,3 +18,4 @@ void IrrlichtInternals::petlaGry()
 		video()->endScene();
 	}
 }
+

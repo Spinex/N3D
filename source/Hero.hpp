@@ -1,6 +1,8 @@
 #pragma once
 #include "precomp.hpp"
 
+//
+
 class Entity
 {
 private:
@@ -38,31 +40,22 @@ private:
 	bool bStanSkoku;
 	float fFallingSpeed;
 	float fGravityAcceleration;
-<<<<<<< HEAD
-		
-	SideCollisionDetector znacznikiKolizji;
-=======
 	
 	SideCollisionDetector znacznikiKolizji;
 	scene::IAnimatedMeshSceneNode* heroWireframe;
->>>>>>> 29bc7c1274edef6c285aa13df94682ddfd7b024d
 	
 public:
     void fallDown();
     void stopFallingDown() {fFallingSpeed = 0;}   
     void setJumpState(bool bV) {bStanSkoku = bV;}
     bool getJumpState() {return bStanSkoku;}
-<<<<<<< HEAD
-    void jump();	
-
-=======
     void jump();
->>>>>>> 29bc7c1274edef6c285aa13df94682ddfd7b024d
+//	void invertDirection();
 public:
 	void rotate(float fValue) {fRotate = fValue;} 
 	void move(ANIMATIONS Anim, DIRECTION Direct); 
 	void decelerate();
-	
+			
 	void resetAnimAndSpeed() { fMovement_Speed = fSzybkoscGracza; nAnimation_Speed = nSzybkoscAnimacjiGracza; }
     	
 	void setDirection(DIRECTION dValue) {dKierunekRuchu = dValue;}
@@ -94,11 +87,23 @@ class Thwump : public Entity {
 };
 
 class DumbDrone : public Entity {
+private:
 	std::vector<Wektor> waypoints;
 	std::size_t current;
 	scene::IAnimatedMeshSceneNode* wireframe;
 
+	void followNextTarget() { current = (current+1)%waypoints.size(); }
+	Wektor currentTarget() { return waypoints[current]; }
+public:
 	void refreshState();
+
+	DumbDrone(Wektor starting_location);
+
+	Wektor getPosition() const
+	{
+		return wireframe->getPosition();
+	}
+
 };
 
 class IntelligentDrone : public Entity {

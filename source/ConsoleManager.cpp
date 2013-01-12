@@ -47,7 +47,7 @@ void ConsoleManager::clear()
 {
 	
 }
-
+//
 core::stringw ConsoleManager::getMessage(unsigned nID) const
 {
 	if (nID < messages.size())
