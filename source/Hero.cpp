@@ -134,9 +134,9 @@ DumbDrone::DumbDrone(Wektor starting_location) :
 	wireframe->setPosition( starting_location );
 	wireframe->setRotation( Wektor( 180, 42, 0 ) ); 
 
-	//wireframe->setMaterialFlag( video::EMF_LIGHTING, false );
+	wireframe->setMaterialFlag( video::EMF_LIGHTING, false );
 	wireframe->setMaterialFlag( video::EMF_BACK_FACE_CULLING, false);
-	//wireframe->setMaterialTexture( 0, internals.video()->getTexture( Hero_Texture ) ); 
+	wireframe->setMaterialTexture( 0, internals.video()->getTexture( "postacie/dronetekstura.png" ) ); 
 
 	//sample locations to move
 	waypoints.push_back(Wektor(199.250015, 38.954994, -169.493530));
