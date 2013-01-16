@@ -126,7 +126,7 @@ void Hero::jump()
 DumbDrone::DumbDrone(Wektor starting_location) :
 	current(0)
 {
-	auto* mesh = internals.scena()->getMesh("postacie/drone.stl"); //auto - nowa funkcjonalność C++11
+	auto* mesh = internals.scena()->getMesh("postacie/drone.obj"); //auto - nowa funkcjonalność C++11
 	wireframe = internals.scena()->addAnimatedMeshSceneNode(mesh);
 	if(!wireframe)
 		{} //wywal program na zbity pysk (ewentualnie grzecznie zgłoś błąd)
