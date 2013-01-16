@@ -50,6 +50,7 @@ IrrlichtInternals::IrrlichtInternals() :
 	str = "SideCollisionDetector is visible: true";
 	konsola->addMessage(str);
 	
+    for (int i = 0; i < 10; i++) golds.push_back(Gold(Wektor(0, 10, 10*i)));
 	
 	petlaGry();
 }
@@ -58,6 +59,7 @@ IrrlichtInternals::~IrrlichtInternals() {
 	_device->drop();
 	_metaSelector->drop();
 	delete konsola;
+	golds.clear();
 	//fclose(file);
 }
 

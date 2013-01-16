@@ -109,3 +109,19 @@ public:
 class IntelligentDrone : public Entity {
 	void recalculate_waypoints();
 };
+
+// -------------------------------------------------------
+
+class Gold : public Entity {
+
+    private:
+    scene::IMeshSceneNode* wireframe;
+
+    public:
+	
+	Gold(Wektor position);
+	void refreshState(){}
+	Wektor getPosition() const {return wireframe->getPosition();}
+	
+	
+};

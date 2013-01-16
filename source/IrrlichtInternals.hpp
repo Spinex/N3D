@@ -19,6 +19,8 @@ private:
 
 	std::unique_ptr<Hero> bohaterGry;
 	std::unique_ptr<Entity> drone;
+	
+	std::vector<Gold> golds;
 	ConsoleManager* konsola;
 
 private:
