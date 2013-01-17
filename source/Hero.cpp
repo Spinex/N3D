@@ -28,12 +28,19 @@ Hero::Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nA
 	heroWireframe->setAnimationSpeed(nAnimSpeed);  
 	
 	heroWireframe->setFrameLoop(1,1);
-	
+
+  // Eksperymenty poczatek	
 	anim = internals.scena()->createCollisionResponseAnimator(internals.selektor_trojkatow(), heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0));
-	anim->setCollisionCallback(new HeroCollisionCallback());
+	animKladki = internals.scena()->createCollisionResponseAnimator(selectorKladki, heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0));
+//	anim->setCollisionCallback(new HeroCollisionCallback());
+
+    animKladki->setCollisionCallback(new HeroCollisionCallback());  
 
 	heroWireframe->addAnimator(anim);
+    heroWireframe->addAnimator(animKladki);
+  // Eksperymenty koniec	
 }
+
 
 HeroCollisionCallback hero_collision_callback;
 
@@ -126,7 +133,7 @@ void Hero::jump()
 DumbDrone::DumbDrone(Wektor starting_location) :
 	current(0)
 {
-	auto* mesh = internals.scena()->getMesh("postacie/drone.stl"); //auto - nowa funkcjonalność C++11
+	auto* mesh = internals.scena()->getMesh("postacie/drone.obj"); //auto - nowa funkcjonalność C++11
 	wireframe = internals.scena()->addAnimatedMeshSceneNode(mesh);
 	if(!wireframe)
 		{} //wywal program na zbity pysk (ewentualnie grzecznie zgłoś błąd)
@@ -134,8 +141,8 @@ DumbDrone::DumbDrone(Wektor starting_location) :
 	wireframe->setPosition( starting_location );
 	wireframe->setRotation( Wektor( 180, 42, 0 ) ); 
 
-	wireframe->setMaterialFlag( video::EMF_LIGHTING, false );
 	wireframe->setMaterialFlag( video::EMF_BACK_FACE_CULLING, false);
+	wireframe->setMaterialFlag( video::EMF_LIGHTING, false );
 	wireframe->setMaterialTexture( 0, internals.video()->getTexture( "postacie/dronetekstura.png" ) ); 
 
 	//sample locations to move

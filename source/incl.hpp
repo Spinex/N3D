@@ -46,6 +46,14 @@ extern const float fSzybkoscGracza;
 extern const unsigned nSzybkoscAnimacjiGracza;
 
 extern scene::ISceneNodeAnimatorCollisionResponse* anim;
+
+// Testowe poczatek!!!
+
+extern scene::ISceneNodeAnimatorCollisionResponse* animKladki;
+extern scene::ITriangleSelector* selectorKladki;
+
+// Testowe koniec!!!
+
 extern const EKEY_CODE klawiszSkoku;
 
 extern const float fSilaTarcia;
