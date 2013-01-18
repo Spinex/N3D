@@ -99,8 +99,10 @@ void IrrlichtInternals::recursiveFillMetaSelector(scene::ISceneNode* node, scene
 				   scene::ITriangleSelector* selector = scena()->createTriangleSelector(mesh->getMesh(0), node);
 				   node->setTriangleSelector(selector);
 				   _metaSelector->addTriangleSelector(selector);
+				   
+				   importantSelectors.push_back(selector);
 				   				   
-				   selector->drop();
+				//   selector->drop();
 				}
                 else
                 {

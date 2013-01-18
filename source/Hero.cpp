@@ -29,13 +29,6 @@ Hero::Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nA
 	
 	heroWireframe->setFrameLoop(1,1);
 
-  // Eksperymenty poczatek	
-//	anim = internals.scena()->createCollisionResponseAnimator(internals.selektor_trojkatow(), heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0));
-//	animKladki = internals.scena()->createCollisionResponseAnimator(selectorKladki, heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0));
-//	anim->setCollisionCallback(new HeroCollisionCallback());
-
- //   animKladki->setCollisionCallback(new HeroCollisionCallback()); 
-
  std::vector<scene::ITriangleSelector*>& selectors = internals.getSelectors(); 
  
  for (unsigned i = 0; i < selectors.size(); i++)
@@ -50,15 +43,11 @@ Hero::Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nA
 	 
  }  
  
-      scene::ISceneNodeAnimatorCollisionResponse* animator = 
+  /*    scene::ISceneNodeAnimatorCollisionResponse* animator = 
 	  internals.scena()->createCollisionResponseAnimator(internals.selektor_trojkatow(), heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0)); 
 	  
 	  heroWireframe->addAnimator(animator);
-	  animators.push_back(animator);
-
- //	heroWireframe->addAnimator(anim);
-  //  heroWireframe->addAnimator(animKladki);
-  // Eksperymenty koniec	
+	  animators.push_back(animator); */
 }
 
 void Hero::move(ANIMATIONS Anim, DIRECTION Direct) {
