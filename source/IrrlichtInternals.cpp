@@ -60,7 +60,9 @@ IrrlichtInternals::~IrrlichtInternals() {
 	_metaSelector->drop();
 	delete konsola;
 	golds.clear();
-	selectorKladki->drop();
+	//selectorKladki->drop();
+	
+	for (unsigned i = 0; i < importantSelectors.size(); i++) importantSelectors[i]->drop();
 	//fclose(file);
 }
 
@@ -68,7 +70,7 @@ void IrrlichtInternals::wczytajMapeIKolizje() {
 	scena()->loadScene("mapa/map.irr");
 	_metaSelector = scena()->createMetaTriangleSelector();
 	recursiveFillMetaSelector( scena()->getRootSceneNode(), _metaSelector );
-	
+			
 	//anim->drop();
 }
 
@@ -97,12 +99,15 @@ void IrrlichtInternals::recursiveFillMetaSelector(scene::ISceneNode* node, scene
 				   scene::ITriangleSelector* selector = scena()->createTriangleSelector(mesh->getMesh(0), node);
 				   node->setTriangleSelector(selector);
 				   _metaSelector->addTriangleSelector(selector);
+				   				   
 				   selector->drop();
 				}
                 else
                 {
-				   selectorKladki = scena()->createTriangleSelector(mesh->getMesh(0), node);
-				   node->setTriangleSelector(selectorKladki);
+				   scene::ITriangleSelector* selector = scena()->createTriangleSelector(mesh->getMesh(0), node);
+				   node->setTriangleSelector(selector);
+				   				   
+				   importantSelectors.push_back(selector);
                 }  				
 			// EKSPERYMENTY KONIEC ********************	
 			}

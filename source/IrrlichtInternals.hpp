@@ -21,6 +21,8 @@ private:
 	std::unique_ptr<Entity> drone;
 	
 	std::vector<Gold> golds;
+	std::vector<scene::ITriangleSelector*> importantSelectors;
+		
 	ConsoleManager* konsola;
 
 private:
@@ -45,6 +47,8 @@ public:
 	video::IVideoDriver* video() { return _video; }
 	scene::ISceneManager* scena() { return _menage; }
 	scene::IMetaTriangleSelector* selektor_trojkatow() { return _metaSelector; }
+	
+	std::vector<scene::ITriangleSelector*>& getSelectors() {return importantSelectors;}
 };
 
 extern IrrlichtInternals internals;

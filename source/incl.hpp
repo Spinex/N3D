@@ -47,12 +47,12 @@ extern const unsigned nSzybkoscAnimacjiGracza;
 
 extern scene::ISceneNodeAnimatorCollisionResponse* anim;
 
-// Testowe poczatek!!!
+/*// Testowe poczatek!!!
 
 extern scene::ISceneNodeAnimatorCollisionResponse* animKladki;
 extern scene::ITriangleSelector* selectorKladki;
 
-// Testowe koniec!!!
+// Testowe koniec!!!*/
 
 extern const EKEY_CODE klawiszSkoku;
 

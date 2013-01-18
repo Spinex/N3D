@@ -43,6 +43,9 @@ private:
 	
 	SideCollisionDetector znacznikiKolizji;
 	scene::IAnimatedMeshSceneNode* heroWireframe;
+	HeroCollisionCallback hero_collision_callback;
+	
+	std::vector<scene::ISceneNodeAnimatorCollisionResponse*> animators;
 	
 public:
     void fallDown();

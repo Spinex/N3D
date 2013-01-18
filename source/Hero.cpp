@@ -30,19 +30,36 @@ Hero::Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nA
 	heroWireframe->setFrameLoop(1,1);
 
   // Eksperymenty poczatek	
-	anim = internals.scena()->createCollisionResponseAnimator(internals.selektor_trojkatow(), heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0));
-	animKladki = internals.scena()->createCollisionResponseAnimator(selectorKladki, heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0));
+//	anim = internals.scena()->createCollisionResponseAnimator(internals.selektor_trojkatow(), heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0));
+//	animKladki = internals.scena()->createCollisionResponseAnimator(selectorKladki, heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0));
 //	anim->setCollisionCallback(new HeroCollisionCallback());
 
-    animKladki->setCollisionCallback(new HeroCollisionCallback());  
+ //   animKladki->setCollisionCallback(new HeroCollisionCallback()); 
 
-	heroWireframe->addAnimator(anim);
-    heroWireframe->addAnimator(animKladki);
+ std::vector<scene::ITriangleSelector*>& selectors = internals.getSelectors(); 
+ 
+ for (unsigned i = 0; i < selectors.size(); i++)
+ {
+      scene::ISceneNodeAnimatorCollisionResponse* animator = 
+	  internals.scena()->createCollisionResponseAnimator(selectors[i], heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0)); 
+	  
+	  animator->setCollisionCallback(&hero_collision_callback);
+	  heroWireframe->addAnimator(animator);
+
+      animators.push_back(animator);
+	 
+ }  
+ 
+      scene::ISceneNodeAnimatorCollisionResponse* animator = 
+	  internals.scena()->createCollisionResponseAnimator(internals.selektor_trojkatow(), heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0)); 
+	  
+	  heroWireframe->addAnimator(animator);
+	  animators.push_back(animator);
+
+ //	heroWireframe->addAnimator(anim);
+  //  heroWireframe->addAnimator(animKladki);
   // Eksperymenty koniec	
 }
-
-
-HeroCollisionCallback hero_collision_callback;
 
 void Hero::move(ANIMATIONS Anim, DIRECTION Direct) {
 	Wektor v = heroWireframe->getPosition();
@@ -94,7 +111,10 @@ Wektor Hero::getPosition() const
 
 Hero::~Hero()
 {
-	anim->drop();
+	for (unsigned i = 0; i < animators.size(); i++)
+	{
+	     animators[i]->drop();
+	}
 }
 
 void Hero::fallDown()

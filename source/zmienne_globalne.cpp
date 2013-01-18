@@ -15,12 +15,12 @@
 scene::IAnimatedMesh* heroMesh = NULL;
 scene::ISceneNodeAnimatorCollisionResponse* anim = NULL;
 
-// Testowe poczatek!!!
+/*// Testowe poczatek!!!
 
 scene::ISceneNodeAnimatorCollisionResponse* animKladki = NULL;
 scene::ITriangleSelector* selectorKladki = 0;
 
-// Testowe koniec!!!
+// Testowe koniec!!!*/
 
 const io::path Hero_Mesh = "postacie/bohater.b3d";
 const io::path Hero_Texture = "postacie/bohatertekstura.png";
