@@ -1,6 +1,14 @@
 #include "precomp.hpp"
 #include "incl.hpp"
 
+bool HeroCollisionCallback::onCollision(const scene::ISceneNodeAnimatorCollisionResponse & animator)
+{
+	const scene::ISceneNode* collided_node = animator.getCollisionNode();
+	printf("CLD %d ", collided_node->getID());
+	if (collided_node->getID() == 1337) exit(0);
+	return false;
+}
+
 Hero::Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nAnimSpeed, float fMovementSpeed) :
 	fRotate(Rotate),
 	dKierunekRuchu(FORWARD),
@@ -29,25 +37,27 @@ Hero::Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nA
 	
 	heroWireframe->setFrameLoop(1,1);
 
- std::vector<scene::ITriangleSelector*>& selectors = internals.getSelectors(); 
- 
- for (unsigned i = 0; i < selectors.size(); i++)
- {
-      scene::ISceneNodeAnimatorCollisionResponse* animator = 
-	  internals.scena()->createCollisionResponseAnimator(selectors[i], heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0)); 
-	  
-	  animator->setCollisionCallback(&hero_collision_callback);
-	  heroWireframe->addAnimator(animator);
+	std::vector<scene::ITriangleSelector*>& selectors = internals.getSelectors(); 
 
-      animators.push_back(animator);
-	 
- }  
- 
-  /*    scene::ISceneNodeAnimatorCollisionResponse* animator = 
-	  internals.scena()->createCollisionResponseAnimator(internals.selektor_trojkatow(), heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0)); 
-	  
-	  heroWireframe->addAnimator(animator);
-	  animators.push_back(animator); */
+	for (unsigned i = 0; i < selectors.size(); i++)
+	{
+		scene::ISceneNodeAnimatorCollisionResponse* animator = 
+		internals.scena()->createCollisionResponseAnimator(selectors[i], heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0)); 
+
+		animator->setCollisionCallback(&hero_collision_callback);
+		heroWireframe->addAnimator(animator);
+
+		animators.push_back(animator);
+	}
+
+	/*    scene::ISceneNodeAnimatorCollisionResponse* animator = 
+	internals.scena()->createCollisionResponseAnimator(internals.selektor_trojkatow(),
+	                                                   heroWireframe,
+	                                                   Wektor(5,11,5),
+	                                                   Wektor(0,0,0),
+	                                                   Wektor(0,-13,0)); 
+	heroWireframe->addAnimator(animator);
+	animators.push_back(animator); */
 }
 
 void Hero::move(ANIMATIONS Anim, DIRECTION Direct) {
@@ -102,7 +112,7 @@ Hero::~Hero()
 {
 	for (unsigned i = 0; i < animators.size(); i++)
 	{
-	     animators[i]->drop();
+	    animators[i]->drop();
 	}
 }
 
@@ -168,15 +178,22 @@ void DumbDrone::refreshState()
 	if(getPosition().equals(currentTarget(), 1.2)) followNextTarget();
 }
 
-void IntelligentDrone::recalculate_waypoints()
+/// Przelicza ponownie trasę przemierzaną przez drona.
+/// Wykonywana pod koniec zmiany trasy inteligentnego drona.
+/// 
+void IntelligentDrone::recalculateWaypoints()
 {
 	// to tylko zalążek
 }
 
-
+/// Konstruktor klasy Gold.
+/// Umieszcza złoto w miejscu określonym argumentem, 
+/// na scenie określonej w zmiennej globalnej internals
+/// TODO: wydzielić logikę levela z IrrlichtInternals i umieścić w osobnej klasie
+/// i przekazywać ją przez argument do konstruktora.
 Gold::Gold(Wektor position)
 {
-     wireframe = internals.scena()->addCubeSceneNode(10.0f, 0, -2, position, Wektor(0, 0, 0), Wektor(0.3f, 0.3f, 0.3f));
-	 wireframe->setMaterialTexture( 0, internals.video()->getTexture( "postacie/goldtekstura.png" ) ); 
-	 wireframe->setMaterialFlag( video::EMF_LIGHTING, false );
+	wireframe = internals.scena()->addCubeSceneNode(10.0f, 0, -2, position, Wektor(0, 0, 0), Wektor(0.3f, 0.3f, 0.3f));
+	wireframe->setMaterialTexture( 0, internals.video()->getTexture( "postacie/goldtekstura.png" ) ); 
+	wireframe->setMaterialFlag( video::EMF_LIGHTING, false );
 }

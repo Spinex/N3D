@@ -1,8 +1,7 @@
 #pragma once
 #include "precomp.hpp"
 
-//
-
+/// Obiekt na planszy.
 class Entity
 {
 private:
@@ -15,17 +14,10 @@ public:
 
 class HeroCollisionCallback : public scene::ICollisionCallback
 {
-	bool onCollision(const scene::ISceneNodeAnimatorCollisionResponse & animator)
-	{
-		const scene::ISceneNode* collided_node = animator.getCollisionNode();
-		printf("CLD %d ", collided_node->getID());
-		if (collided_node->getID() == 1337) exit(0);
-		return false;
-	}
+	bool onCollision(const scene::ISceneNodeAnimatorCollisionResponse & animator);
 };
 
-extern HeroCollisionCallback hero_collision_callback;
-
+/// Główny bohater.
 class Hero : public Entity {
 private:
 	float fRotate;
@@ -84,11 +76,12 @@ public:
 	Wektor getPosition() const;
 };    
 
-
+/// Spadająca sześcienna platforma z jedną powierzchnią kopiącą prądem.
 class Thwump : public Entity {
 
 };
 
+/// Dron kopiący prądem. 
 class DumbDrone : public Entity {
 private:
 	std::vector<Wektor> waypoints;
@@ -109,22 +102,20 @@ public:
 
 };
 
+/// Dron kopiący prądem. Wersja z namierzaniem gracza.
 class IntelligentDrone : public Entity {
-	void recalculate_waypoints();
+	void recalculateWaypoints();
 };
 
-// -------------------------------------------------------
-
+/// Złoto.
+/// Zebranie złota wydłuża czas życia postaci gracza o 2 sekundy.
 class Gold : public Entity {
 
     private:
     scene::IMeshSceneNode* wireframe;
 
     public:
-	
 	Gold(Wektor position);
-	void refreshState(){}
+	void refreshState() {}
 	Wektor getPosition() const {return wireframe->getPosition();}
-	
-	
 };
