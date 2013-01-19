@@ -1,6 +1,7 @@
 #include "precomp.hpp"
 #include "incl.hpp"
 
+/// Wyświetla wiadomości na ekran.
 void ConsoleManager::showMessages() const
 {
 	/*
@@ -27,27 +28,36 @@ void ConsoleManager::showMessages() const
 	
 }
 
+/// Ustawia wirtualne urządzenie Irrlichta pod którym ma wyświetlać wiadomości.
 ConsoleManager::ConsoleManager(IrrlichtDevice* device) 
 {
 	font = device->getGUIEnvironment()->getBuiltInFont();
 }
 
+/// Dodaje wiadomość o kolejnym numerze identyfikacyjnym.
 void ConsoleManager::addMessage(const core::stringw& arg)
 {
 	messages.push_back(arg);
 }
 
+/// Nadpisuje wiadomość pod numerem nID.
+/// Jeżeli nie ma jeszcze takiej wiadomości, nic nie rób.
 void ConsoleManager::setMessage(unsigned nID, const core::stringw& arg)
 {
 	if (nID < messages.size())
 		messages[nID] = arg;
 }
 
+/// Czyścienie ekranu - zalążek.
+/// TODO: zaimplementować.
 void ConsoleManager::clear()
 {
 	
 }
-//
+
+/// Wyciąga informację zapisaną pod numerem nID.
+/// Jeżeli nie istnieje informacja pod danym numerem, 
+/// zwraca ciąg "!OutOfBound!".
 core::stringw ConsoleManager::getMessage(unsigned nID) const
 {
 	if (nID < messages.size())

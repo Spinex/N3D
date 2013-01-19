@@ -1,6 +1,8 @@
 #pragma once
 #include "precomp.hpp"
 
+/// Klasa do wyświetlania informacji do debugowania.
+/// Zawiera prosty intefejs do umieszczania wiadomości.
 class ConsoleManager
 {
 private:
@@ -20,7 +22,9 @@ public:
 	ConsoleManager(IrrlichtDevice* device);
 };
 
-// alternatywna klasa konsoli, jeszcze ją rozwijam
+/// Alternatywna klasa konsoli, jeszcze ją rozwijam.
+/// W zamierzeniach umożliwi wypisywanie na ekran, z opcjonalnym zapisem do pliku.
+/// Wypisywanie na ekran będzie z użyciem funkcji printf-o-podobnej.
 class AlternativeConsole
 {
 private:
