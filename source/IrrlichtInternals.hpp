@@ -21,7 +21,7 @@ private:
 	std::unique_ptr<Entity> drone;
 	
 	std::vector<Gold> golds;
-	std::vector<scene::ITriangleSelector*> importantSelectors;
+	std::unordered_map<int, scene::ITriangleSelector*> importantSelectors;
 		
 	ConsoleManager* konsola;
 
@@ -48,7 +48,7 @@ public:
 	scene::ISceneManager* scena() { return _menage; }
 	scene::IMetaTriangleSelector* selektor_trojkatow() { return _metaSelector; }
 	
-	std::vector<scene::ITriangleSelector*>& getSelectors() {return importantSelectors;}
+	std::unordered_map<int, scene::ITriangleSelector*>& getSelectors() {return importantSelectors;}
 };
 
 extern IrrlichtInternals internals;

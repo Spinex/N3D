@@ -37,14 +37,13 @@ Hero::Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nA
 	
 	heroWireframe->setFrameLoop(1,1);
 
-	std::vector<scene::ITriangleSelector*>& selectors = internals.getSelectors(); 
+	auto& selectors = internals.getSelectors(); 
 
-	for (unsigned i = 0; i < selectors.size(); i++)
+	for (auto &x : selectors)
 	{
-		scene::ISceneNodeAnimatorCollisionResponse* animator = 
-		internals.scena()->createCollisionResponseAnimator(selectors[i], heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0)); 
+		auto* animator = internals.scena()->createCollisionResponseAnimator(x.second, heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0)); 
 
-		animator->setCollisionCallback(&hero_collision_callback);
+		animator->setCollisionCallback(new HeroCollisionCallback());
 		heroWireframe->addAnimator(animator);
 
 		animators.push_back(animator);

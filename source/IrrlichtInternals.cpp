@@ -62,7 +62,7 @@ IrrlichtInternals::~IrrlichtInternals() {
 	golds.clear();
 	//selectorKladki->drop();
 	
-	for (unsigned i = 0; i < importantSelectors.size(); i++) importantSelectors[i]->drop();
+	for (auto &x : importantSelectors) x.second->drop();
 	//fclose(file);
 }
 
@@ -100,7 +100,7 @@ void IrrlichtInternals::recursiveFillMetaSelector(scene::ISceneNode* node, scene
 				   node->setTriangleSelector(selector);
 				   _metaSelector->addTriangleSelector(selector);
 				   
-				   importantSelectors.push_back(selector);
+				   importantSelectors.insert({node->getID(), selector});
 				   				   
 				//   selector->drop();
 				}
@@ -109,7 +109,7 @@ void IrrlichtInternals::recursiveFillMetaSelector(scene::ISceneNode* node, scene
 				   scene::ITriangleSelector* selector = scena()->createTriangleSelector(mesh->getMesh(0), node);
 				   node->setTriangleSelector(selector);
 				   				   
-				   importantSelectors.push_back(selector);
+				   importantSelectors.insert({node->getID(), selector});
                 }  				
 			// EKSPERYMENTY KONIEC ********************	
 			}
