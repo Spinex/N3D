@@ -9,3 +9,5 @@ Zmienne - notacja wegierska. Przedrostki z małej, pierwsza litera zmiennej z du
 f - float, n - unsigned, i - signed, p - wskaźniki, sp - inteligentne wskaźniki
 
 Nazwy klas w stylu Java. Nazwy metod w stylu Java. Makra z duzych liter i z podkreslnikami.
+
+Nie dajemy spacji na końcu linii.
