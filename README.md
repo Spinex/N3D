@@ -5,6 +5,7 @@ Po if jest spacja przed nawiasem z warunkiem.
 
 Wciecia za pomoca tabulatorow (dlugosc 4), spacje dla wyrownywania.
 
-Zmienne - notacja wegierska. Przedrostki z małej, pierwsza litera zmiennej z dużej, potem wszystko male z podkreslnikami potem f - float, n - unsigned, i - signed, p - wskaźniki
+Zmienne - notacja wegierska. Przedrostki z małej, pierwsza litera zmiennej z dużej, wszystko male z podkreslnikami potem 
+f - float, n - unsigned, i - signed, p - wskaźniki, sp - inteligentne wskaźniki
 
 Nazwy klas w stylu Java. Nazwy metod w stylu Java. Makra z duzych liter i z podkreslnikami.
