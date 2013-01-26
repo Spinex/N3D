@@ -1,6 +1,7 @@
 The project is inspired by excellent freeware game named N.
 
 Zasady: Nawiasy klamrowe w ifach i funkcjach w stylu pascalowym, a nie java.
+Po if jest spacja przed nawiasem z warunkiem.
 
 Wciecia za pomoca tabulatorow (dlugosc 4), spacje dla wyrownywania.
 
