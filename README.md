@@ -17,7 +17,7 @@ Wciecia za pomoca tabulatorow (dlugosc 4), spacje dla wyrownywania.
 
     if (font)
     	font->draw(fstr.c_str(),
-    	           core::rect<s32>(50,nY,600,nY + 50),
+    	           core::rect<s32>(50,nY,600,nY + 50), // w tej linii jest 1 tabulator i 11 spacji po nim
     	           video::SColor(255,255,255,255));
 
 Notacja węgierska dla zmiennych. Przedrostki z małej, pierwsza litera zmiennej z dużej, wszystko małe z podkreślnikami.
@@ -32,7 +32,7 @@ sp - inteligentne wskaźniki
     double fPi = 3.1415926; 
     float fX = 2 * fPi * iR;
     std::unique_ptr<std::FILE, decltype(&std::fclose)> spPlik(std::fopen("out.txt", "a+"), std::fclose);
-    FILE* pPlik;
+    std::FILE* pPlik;
 
 Nazwy klas w stylu Java:
 
