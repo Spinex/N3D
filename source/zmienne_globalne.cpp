@@ -13,35 +13,27 @@
 // trzeba uważać na konflikty nazw. Ale od czego są przestrzenie nazw...)
 
 scene::IAnimatedMesh* heroMesh = NULL;
-scene::ISceneNodeAnimatorCollisionResponse* anim = NULL;
 
-/*// Testowe poczatek!!!
+const float pozycja_gracza_x = 7;
+const float pozycja_gracza_y = 80;
+const float pozycja_gracza_z = 0;
+const float skala_gracza_x = -3;
+const float skala_gracza_y = -3;
+const float skala_gracza_z = -3;
 
-scene::ISceneNodeAnimatorCollisionResponse* animKladki = NULL;
-scene::ITriangleSelector* selectorKladki = 0;
+float ObrotGraczaY = 180;
 
-// Testowe koniec!!!*/
+const float SilaSkoku = 4;
+const float SilaTarcia = 0.04;
 
-const io::path Hero_Mesh = "postacie/bohater.b3d";
-const io::path Hero_Texture = "postacie/bohatertekstura.png";
-
-const float fPozycjaGraczaX = 7;
-const float fPozycjaGraczaY = 80;
-const float fPozycjaGraczaZ = 0;
-const float fSkalaGraczaX = -3;
-const float fSkalaGraczaY = -3;
-const float fSkalaGraczaZ = -3;
-
-float fObrotGraczaY = 180;
-
-const float fSilaSkoku = 4;
-const float fSilaTarcia = 0.04;
-
-const float fSzybkoscGracza = 1.4;
-const unsigned nSzybkoscAnimacjiGracza = fSzybkoscGracza * 33.3;
+const float SzybkoscGracza = 1.4;
+const unsigned SzybkoscAnimacjiGracza = SzybkoscGracza * 33.3;
 
 
 const EKEY_CODE klawiszSkoku = irr::KEY_SPACE;
 
 
-IrrlichtInternals internals;
+IrrlichtInternals internals(createDevice( video::EDT_OPENGL, core::dimension2d<u32>( 800, 600 ), 32, false, false, true ));
+ConsoleManager konsola(internals);
+InputOutputHandler aktywne(internals);
+Level level(internals, "mapa/map.irr");

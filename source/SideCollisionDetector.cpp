@@ -25,57 +25,31 @@ int sprawdzKat(DIRECTION dKierunek)
 	}
 }
 
-SideCollisionDetector::SideCollisionDetector()
+SideCollisionDetector::SideCollisionDetector(Level& level, Entity& ent) : connected_entity(ent)
 {
-	/*   Skladnia potrzebnej metody
+	znaczniki[forward] = level.scena()->addCubeSceneNode(3.0f, 0, -1, Wektor(0, 10, 10), Wektor(0, 0, 0), Wektor(0.15f, 0.0f, 0.0f));
+	znaczniki[backward] = level.scena()->addCubeSceneNode(3.0f, 0, -1, Wektor(0, 10, 10), Wektor(0, 0, 0), Wektor(0.15f, 0.0f, 0.0f));
+	znaczniki[up] = level.scena()->addCubeSceneNode(3.0f, 0, -1, Wektor(0, 10, 10), Wektor(0, 0, 0), Wektor(0.0f, 0.15f, 0.0f));
+	znaczniki[down] = level.scena()->addCubeSceneNode(3.0f, 0, -1, Wektor(0, 10, 10), Wektor(0, 0, 0), Wektor(0.0f, 0.15f, 0.0f));
+	znaczniki[right] = level.scena()->addCubeSceneNode(3.0f, 0, -1, Wektor(0, 10, 10), Wektor(0, 0, 0), Wektor(0.0f, 0.0f, 0.15f));
+	znaczniki[left] = level.scena()->addCubeSceneNode(3.0f, 0, -1, Wektor(0, 10, 10), Wektor(0, 0, 0), Wektor(0.0f, 0.0f, 0.15f));
 	
-	  addCubeSceneNode 	( 	f32  	size = 10.0f,
-								ISceneNode *  	parent = 0,
-								s32  	id = -1,
-								const core::vector3df &  	position = core::vector3df(0, 0, 0),
-								const core::vector3df &  	rotation = core::vector3df(0, 0, 0),
-								const core::vector3df &  	scale = core::vector3df(1.0f, 1.0f, 1.0f)
-							)     */
-	
-	
-	forwardZnacznik = internals.scena()->addCubeSceneNode(3.0f, 0, -1, Wektor(0, 10, 10), Wektor(0, 0, 0), Wektor(0.15f, 1.0f, 1.0f));
-	backZnacznik = internals.scena()->addCubeSceneNode(3.0f, 0, -1, Wektor(0, 10, 10), Wektor(0, 0, 0), Wektor(0.15f, 1.0f, 1.0f));
-	upZnacznik = internals.scena()->addCubeSceneNode(3.0f, 0, -1, Wektor(0, 10, 10), Wektor(0, 0, 0), Wektor(1.0f, 0.15f, 1.0f));
-	downZnacznik = internals.scena()->addCubeSceneNode(3.0f, 0, -1, Wektor(0, 10, 10), Wektor(0, 0, 0), Wektor(1.0f, 0.15f, 1.0f));
-	
-	rightZnacznik = internals.scena()->addCubeSceneNode(3.0f, 0, -1, Wektor(0, 10, 10), Wektor(0, 0, 0), Wektor(1.0f, 1.0f, 0.15f));
-	leftZnacznik = internals.scena()->addCubeSceneNode(3.0f, 0, -1, Wektor(0, 10, 10), Wektor(0, 0, 0), Wektor(1.0f, 1.0f, 0.15f));
-	
-	
-	// -------------------------------------------------------------
-	
-	forwardAnimator = internals.scena()->createCollisionResponseAnimator
-					  (internals.selektor_trojkatow(), forwardZnacznik, core::vector3df(3,3,3), core::vector3df(0,0,0), core::vector3df(0,0,0));
-	backAnimator = internals.scena()->createCollisionResponseAnimator
-				   (internals.selektor_trojkatow(), backZnacznik, core::vector3df(3,3,3), core::vector3df(0,0,0), core::vector3df(0,0,0));
-	upAnimator = internals.scena()->createCollisionResponseAnimator
-				 (internals.selektor_trojkatow(), upZnacznik, core::vector3df(3,3,3), core::vector3df(0,0,0), core::vector3df(0,0,0));
-	downAnimator = internals.scena()->createCollisionResponseAnimator
-				   (internals.selektor_trojkatow(), downZnacznik, core::vector3df(3,3,3), core::vector3df(0,0,0), core::vector3df(0,0,0));
+	animatory[forward] = level.scena()->createCollisionResponseAnimator(level.selektor_trojkatow(), znaczniki[forward], core::vector3df(3,3,3), core::vector3df(0,0,0), core::vector3df(0,0,0));
+	animatory[backward] = level.scena()->createCollisionResponseAnimator(level.selektor_trojkatow(), znaczniki[backward], core::vector3df(3,3,3), core::vector3df(0,0,0), core::vector3df(0,0,0));
+	animatory[up] = level.scena()->createCollisionResponseAnimator(level.selektor_trojkatow(), znaczniki[up], core::vector3df(3,3,3), core::vector3df(0,0,0), core::vector3df(0,0,0));
+	animatory[down] = level.scena()->createCollisionResponseAnimator(level.selektor_trojkatow(), znaczniki[down], core::vector3df(3,3,3), core::vector3df(0,0,0), core::vector3df(0,0,0));
+	animatory[right] = level.scena()->createCollisionResponseAnimator(level.selektor_trojkatow(), znaczniki[right], core::vector3df(3,3,3), core::vector3df(0,0,0), core::vector3df(0,0,0));
+	animatory[left] = level.scena()->createCollisionResponseAnimator(level.selektor_trojkatow(), znaczniki[left], core::vector3df(3,3,3), core::vector3df(0,0,0), core::vector3df(0,0,0));
 				   
-	rightAnimator = internals.scena()->createCollisionResponseAnimator
-					(internals.selektor_trojkatow(), rightZnacznik, core::vector3df(3,3,3), core::vector3df(0,0,0), core::vector3df(0,0,0));
-	leftAnimator = internals.scena()->createCollisionResponseAnimator
-				   (internals.selektor_trojkatow(), leftZnacznik, core::vector3df(3,3,3), core::vector3df(0,0,0), core::vector3df(0,0,0));
-				   
-	forwardZnacznik->addAnimator(forwardAnimator);
-	downZnacznik->addAnimator(downAnimator);
-	backZnacznik->addAnimator(backAnimator);
-	upZnacznik->addAnimator(upAnimator);
-	leftZnacznik->addAnimator(leftAnimator);
-	rightZnacznik->addAnimator(rightAnimator);
-	
-	
-	
-	
+	znaczniki[forward]->addAnimator(animatory[forward]);
+	znaczniki[down]->addAnimator(animatory[down]);
+	znaczniki[backward]->addAnimator(animatory[backward]);
+	znaczniki[up]->addAnimator(animatory[up]);
+	znaczniki[left]->addAnimator(animatory[left]);
+	znaczniki[right]->addAnimator(animatory[right]);
 }
 
-void SideCollisionDetector::setPosition(Wektor v, float fRotate, DIRECTION dKierunek)
+void SideCollisionDetector::setPosition(Wektor v, float rotate, DIRECTION dKierunek)
 {
 	// Wiem ze implementacja toporna, pisana na kolanie, lenistwo
 	
@@ -85,21 +59,21 @@ void SideCollisionDetector::setPosition(Wektor v, float fRotate, DIRECTION dKier
 	Wektor originalCoordinates = v;
 	
 	// Odpowiednia translacja
-	v.Z += radius * cos(( core::PI * (fRotate - 90 + angle)) / 180);
-	v.X += radius * sin(( core::PI * (fRotate - 90 + angle)) / 180);
+	v.Z += radius * cos(( core::PI * (rotate - 90 + angle)) / 180);
+	v.X += radius * sin(( core::PI * (rotate - 90 + angle)) / 180);
 	v.Y += 15;
 	
-	forwardZnacznik->setPosition( v );
+	znaczniki[forward]->setPosition( v );
 	
 	// *******************************************************
 	
 	v = originalCoordinates;
 	
-	v.Z -= radius * cos(( core::PI * (fRotate - 90 + angle)) / 180);
-	v.X -= radius * sin(( core::PI * (fRotate - 90 + angle)) / 180);
+	v.Z -= radius * cos(( core::PI * (rotate - 90 + angle)) / 180);
+	v.X -= radius * sin(( core::PI * (rotate - 90 + angle)) / 180);
 	v.Y += 15;
 	
-	backZnacznik->setPosition( v );
+	znaczniki[backward]->setPosition( v );
 	
 	// ********************************************************
 	
@@ -107,15 +81,15 @@ void SideCollisionDetector::setPosition(Wektor v, float fRotate, DIRECTION dKier
 	
 	v.Y += 22;
 	
-	upZnacznik->setPosition( v );
+	znaczniki[up]->setPosition( v );
 	
 	// ********************************************************
 	
 	v = originalCoordinates;
 	
-	v.Y += 3;
+	v.Y += 4;
 	
-	downZnacznik->setPosition( v );
+	znaczniki[down]->setPosition( v );
 	
 	// *********************************************************
 	
@@ -123,70 +97,63 @@ void SideCollisionDetector::setPosition(Wektor v, float fRotate, DIRECTION dKier
 	
 	angle += 90;
 	
-	v.Z += radius * cos(( core::PI * (fRotate - 90 + angle)) / 180);
-	v.X += radius * sin(( core::PI * (fRotate - 90 + angle)) / 180);
+	v.Z += radius * cos(( core::PI * (rotate - 90 + angle)) / 180);
+	v.X += radius * sin(( core::PI * (rotate - 90 + angle)) / 180);
 	v.Y += 15;
 	
-	rightZnacznik->setPosition( v );
+	znaczniki[right]->setPosition( v );
 	
 	// *********************************************************
 	
 	v = originalCoordinates;
 	
-	v.Z -= radius * cos(( core::PI * (fRotate - 90 + angle)) / 180);
-	v.X -= radius * sin(( core::PI * (fRotate - 90 + angle)) / 180);
+	v.Z -= radius * cos(( core::PI * (rotate - 90 + angle)) / 180);
+	v.X -= radius * sin(( core::PI * (rotate - 90 + angle)) / 180);
 	v.Y += 15;
 	
-	leftZnacznik->setPosition( v );
+	znaczniki[left]->setPosition( v );
 	
 }
 
-void SideCollisionDetector::setRotation(float fRotate, DIRECTION dKierunek)
+void SideCollisionDetector::setRotation(float rotate, DIRECTION dKierunek)
 {
-
 	int angle = sprawdzKat(dKierunek);
-	
-	forwardZnacznik->setRotation( Wektor( 0, fRotate + angle, 0 ) );
-	backZnacznik->setRotation(  Wektor( 0, fRotate + angle, 0 )  );
-	upZnacznik->setRotation(  Wektor( 0, fRotate + angle, 0 )  );
-	downZnacznik->setRotation(  Wektor( 0, fRotate + angle, 0 )  );
-	
-	rightZnacznik->setRotation(  Wektor( 0, fRotate + angle, 0 )  );
-	leftZnacznik->setRotation(  Wektor( 0, fRotate + angle, 0 )  );
-	
+	for(auto& znacznik : znaczniki)
+		znacznik->setRotation( Wektor( 0, rotate + angle, 0 ) );
 }
 
 void SideCollisionDetector::setVisible(bool bV)
 {
-	leftZnacznik->setVisible(bV);
-	rightZnacznik->setVisible(bV);
-	forwardZnacznik->setVisible(bV);
-	backZnacznik->setVisible(bV);
-	upZnacznik->setVisible(bV);
-	downZnacznik->setVisible(bV);
+	znaczniki[left]->setVisible(bV);
+	znaczniki[right]->setVisible(bV);
+	znaczniki[forward]->setVisible(bV);
+	znaczniki[backward]->setVisible(bV);
+	znaczniki[up]->setVisible(bV);
+	znaczniki[down]->setVisible(bV);
 }
 
 std::vector<bool> SideCollisionDetector::getCollisionState()
 {
 	std::vector<bool> stany(6, false);
-	//  for (int i = 0; i < 6; i++) stany[i] = false;
-	
-	if (leftAnimator->collisionOccurred()) stany[0] = true;
-	if (rightAnimator->collisionOccurred()) stany[1] = true;
-	if (forwardAnimator->collisionOccurred()) stany[2] = true;
-	if (backAnimator->collisionOccurred()) stany[3] = true;
-	if (upAnimator->collisionOccurred()) stany[4] = true;
-	if (downAnimator->collisionOccurred()) stany[5] = true;
-	
+	for(int i = 0; i < 6; ++i)
+	{
+		stany[i] = animatory[i]->collisionOccurred();
+	}
 	return stany;
 }
 
 SideCollisionDetector::~SideCollisionDetector()
 {
-	leftAnimator->drop();
-	rightAnimator->drop();
-	forwardAnimator->drop();
-	backAnimator->drop();
-	upAnimator->drop();
-	downAnimator->drop();
+	for(auto& animator : animatory)
+		animator->drop();
+}
+
+Wektor SideCollisionDetector::getPosition() const
+{
+	return connected_entity.getPosition();
+}
+
+void SideCollisionDetector::refreshState()
+{
+	
 }

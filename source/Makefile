@@ -5,9 +5,11 @@ CFLAGS_RELEASE=-std=c++11 -Wall -Wextra -Werror -Wno-unused-parameter -Wno-unkno
 LDFLAGS_RELEASE=-lIrrlicht
 #PRECOMP=precomp.hpp.gch
 #jeżeli chcesz użyć prekompilowanych nagłówków
-PRECOMP=
-INCLUDES=$(PRECOMP) incl.hpp Hero.hpp IrrlichtInternals.hpp InputOutputHandler.hpp menedzerObiektow.hpp SideCollisionDetector.hpp ConsoleManager.hpp
-SOURCES=SideCollisionDetector.cpp Hero.cpp IrrlichtInternals.cpp main.cpp petlaGry.cpp sterowanie.cpp zmienne_globalne.cpp ConsoleManager.cpp
+#PRECOMP=
+#w przeciwnym razie
+PRECOMP=precomp.hpp.gch
+INCLUDES=$(PRECOMP) incl.hpp Hero.hpp InputOutputHandler.hpp SideCollisionDetector.hpp ConsoleManager.hpp Level.hpp Entity.hpp
+SOURCES=Level.cpp SideCollisionDetector.cpp Hero.cpp main.cpp InputOutputHandler.cpp zmienne_globalne.cpp ConsoleManager.cpp
 OBJECTS_RELEASE=$(SOURCES:.cpp=.o)
 OBJECTS_DEBUG=$(OBJECTS_RELEASE:.o=d.o)
 
@@ -16,6 +18,9 @@ debug: $(OBJECTS_DEBUG)
 
 release: $(OBJECTS_RELEASE)
 	$(CXX) $(OBJECTS_RELEASE) $(LDFLAGS_RELEASE) -o ../bin/ProjektGry.exe
+
+whole_program: $(INCLUDES) $(SOURCES)
+	$(CXX) $(SOURCES) $(CFLAGS_RELEASE) -flto $(LDFLAGS_RELEASE) -fwhole-program -o ../bin/ProjektGry.exe
 
 precomp.hpp.gch: precomp.hpp
 	$(CXX) $(CFLAGS_RELEASE) precomp.hpp

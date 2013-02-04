@@ -9,102 +9,94 @@ bool HeroCollisionCallback::onCollision(const scene::ISceneNodeAnimatorCollision
 	return false;
 }
 
-Hero::Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nAnimSpeed, float fMovementSpeed) :
-	fRotate(Rotate),
-	dKierunekRuchu(FORWARD),
-	AMove(STAND),
-	fMovement_Speed(fMovementSpeed),
-	nAnimation_Speed(nAnimSpeed),
-	fBezwladnosc(0),
-	fOpoznienie(fSilaTarcia),
-	bJestMartwy(false),
-	bStanSkoku(false),
-	fFallingSpeed(0),
-	heroWireframe(NULL)
+Hero::Hero(Level& level, video::ITexture* texture, float fSpeed, float _rotate, Wektor pozycja, Wektor skala, unsigned nAnimSpeed, float fMovementSpeed) :
+	animation_speed(nAnimSpeed),
+	bezwladnosc(0),
+	opoznienie(SilaTarcia),
+	stan_skoku(false),
+	falling_speed(0),
+	rotation(_rotate),
+	kierunek_ruchu(FORWARD),
+	animation_type(STAND),
+	movement_speed(fMovementSpeed),
+	time_to_live(90.0),
+	znacznikiKolizji(level, *this),
+	wireframe(NULL)
 {
-	heroWireframe = internals.scena()->addAnimatedMeshSceneNode(heroMesh);
-	if(!heroWireframe)
+	auto* mesh = level.scena()->getMesh("postacie/bohater.b3d");
+	wireframe = level.scena()->addAnimatedMeshSceneNode(mesh);
+	if(!wireframe)
 		{} //wywal program na zbity pysk (ewentualnie grzecznie zgłoś błąd)
-	heroWireframe->setScale( skala );
-	heroWireframe->setPosition( pozycja );
-	heroWireframe->setRotation( Wektor( 180, Rotate, 0 ) ); 
+	wireframe->setScale( skala );
+	wireframe->setPosition( pozycja );
+	wireframe->setRotation( Wektor( 180, rotation, 0 ) ); 
 	
-	heroWireframe->setMaterialFlag( video::EMF_LIGHTING, false );
-	heroWireframe->setMaterialFlag( video::EMF_BACK_FACE_CULLING, false);
-	heroWireframe->setMaterialTexture( 0, internals.video()->getTexture( Hero_Texture ) ); 
+	wireframe->setMaterialFlag( video::EMF_LIGHTING, false );
+	wireframe->setMaterialFlag( video::EMF_BACK_FACE_CULLING, false);
+	wireframe->setMaterialTexture( 0, texture ); 
 	
-	heroWireframe->setAnimationSpeed(nAnimSpeed);  
+	wireframe->setAnimationSpeed(nAnimSpeed);  
 	
-	heroWireframe->setFrameLoop(1,1);
+	wireframe->setFrameLoop(1,1);
 
-	auto& selectors = internals.getSelectors(); 
+	auto& selectors = level.getSelectors(); 
 
 	for (auto &x : selectors)
 	{
-		auto* animator = internals.scena()->createCollisionResponseAnimator(x.second, heroWireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0)); 
-
+		auto* animator = level.scena()->createCollisionResponseAnimator(x.second, wireframe, Wektor(5,11,5), Wektor(0,0,0), Wektor(0,-13,0)); 
 		animator->setCollisionCallback(new HeroCollisionCallback());
-		heroWireframe->addAnimator(animator);
+		wireframe->addAnimator(animator);
 
 		animators.push_back(animator);
 	}
-
-	/*    scene::ISceneNodeAnimatorCollisionResponse* animator = 
-	internals.scena()->createCollisionResponseAnimator(internals.selektor_trojkatow(),
-	                                                   heroWireframe,
-	                                                   Wektor(5,11,5),
-	                                                   Wektor(0,0,0),
-	                                                   Wektor(0,-13,0)); 
-	heroWireframe->addAnimator(animator);
-	animators.push_back(animator); */
 }
 
-void Hero::move(ANIMATIONS Anim, DIRECTION Direct) {
-	Wektor v = heroWireframe->getPosition();
+void Hero::move(ANIMATIONS anim, DIRECTION direct) {
+	Wektor v = wireframe->getPosition();
 
-	if (Anim != STAND)
+	if (anim != STAND)
 	{
-		int angle = sprawdzKat(Direct);
-		v.Z += fMovement_Speed * cos(( core::PI * (fRotate - 90 + angle)) / 180);
-		v.X += fMovement_Speed * sin(( core::PI * (fRotate - 90 + angle)) / 180);
-		heroWireframe->setPosition( v );
-		heroWireframe->setRotation( Wektor( 180, fRotate + angle, 0 ) );
+		int angle = sprawdzKat(direct);
+		v.Z += movement_speed * cos(( core::PI * (rotation - 90 + angle)) / 180);
+		v.X += movement_speed * sin(( core::PI * (rotation - 90 + angle)) / 180);
+		wireframe->setPosition( v );
+		wireframe->setRotation( Wektor( 180, rotation + angle, 0 ) );
 	}
 
-	if ((AMove == STAND || AMove == DECELERATION) && Anim == WALK) {
-		heroWireframe->setFrameLoop(15, 34);
-		heroWireframe->setAnimationSpeed( nAnimation_Speed );
-		AMove = WALK;
-		heroWireframe->setAnimationSpeed( nAnimation_Speed );
+	if ((animation_type == STAND || animation_type == DECELERATION) && anim == WALK) {
+		wireframe->setFrameLoop(15, 34);
+		wireframe->setAnimationSpeed( animation_speed );
+		animation_type = WALK;
+		wireframe->setAnimationSpeed( animation_speed );
 	}
-	else if ((AMove == STAND || AMove == WALK) && Anim == DECELERATION) {
-		heroWireframe->setFrameLoop(5, 5);
-		heroWireframe->setAnimationSpeed( nAnimation_Speed ); 
-		AMove = DECELERATION;
+	else if ((animation_type == STAND || animation_type == WALK) && anim == DECELERATION) {
+		wireframe->setFrameLoop(5, 5);
+		wireframe->setAnimationSpeed( animation_speed ); 
+		animation_type = DECELERATION;
 	}
-	else if (Anim == STAND) {
-		heroWireframe->setFrameLoop(1, 1);
-		heroWireframe->setAnimationSpeed( nAnimation_Speed );
-		AMove = STAND;
+	else if (anim == STAND) {
+		wireframe->setFrameLoop(1, 1);
+		wireframe->setAnimationSpeed( animation_speed );
+		animation_type = STAND;
 	}
 }
 
 void Hero::refreshState()
 {
-	// to tylko zalążek
+	znacznikiKolizji.refreshState();
 }
 
 void Hero::decelerate() 
 {
-	fBezwladnosc -= fOpoznienie;
-	fMovement_Speed = fBezwladnosc * fSzybkoscGracza;
+	bezwladnosc -= opoznienie;
+	movement_speed = bezwladnosc * SzybkoscGracza;
 
-	move(DECELERATION, dKierunekRuchu);
+	move(DECELERATION, kierunek_ruchu);
 }
 
 Wektor Hero::getPosition() const
 {
-	return heroWireframe->getPosition();
+	return wireframe->getPosition();
 }
 
 Hero::~Hero()
@@ -117,42 +109,25 @@ Hero::~Hero()
 
 void Hero::fallDown()
 {
-    fGravityAcceleration = 0.2;     
-    Wektor v = heroWireframe->getPosition();
-    v.Y -= fFallingSpeed;
-    heroWireframe->setPosition( v );
-    fFallingSpeed += fGravityAcceleration;
+    gravity_acceleration = 0.2;     
+    Wektor v = wireframe->getPosition();
+    v.Y -= falling_speed;
+    wireframe->setPosition( v );
+    falling_speed += gravity_acceleration;
 } 
 
 void Hero::jump()
 {
-   core::vector3df v = heroWireframe->getPosition();
-   v.Y += fSilaSkoku;
-   heroWireframe->setPosition(v);
-}   
+   core::vector3df v = wireframe->getPosition();
+   v.Y += SilaSkoku;
+   wireframe->setPosition(v);
+}
 
-/* void Hero::invertDirection()
-{
-   switch (dKierunekRuchu)
-   {
-      case FORWARD: dKierunekRuchu = BACKWARD; break;
-	  case BACKWARD: dKierunekRuchu = FORWARD; break;
-	  case LEFT: dKierunekRuchu = RIGHT; break;
-	  case RIGHT: dKierunekRuchu = LEFT; break;
-	  case UP: dKierunekRuchu = DOWN; break;
-	  case DOWN: dKierunekRuchu = UP; break;
-	  case LEFT | FORWARD: dKierunekRuchu = RIGHTBACKWARD; break;
-	  case RIGHT | FORWARD: dKierunekRuchu = LEFTBACKWARD; break;
-	  case LEFT | BACKWARD: dKierunekRuchu = RIGHTFORWARD; break;
-	  case RIGHT | BACKWARD: dKierunekRuchu = LEFTFORWARD; break;
-   }	  
-} */     
-
-DumbDrone::DumbDrone(Wektor starting_location) :
+DumbDrone::DumbDrone(Level& level, video::ITexture* texture, Wektor starting_location) :
 	current(0)
 {
-	auto* mesh = internals.scena()->getMesh("postacie/drone.obj"); //auto - nowa funkcjonalność C++11
-	wireframe = internals.scena()->addAnimatedMeshSceneNode(mesh);
+	auto* mesh = level.scena()->getMesh("postacie/drone.obj"); //auto - nowa funkcjonalność C++11
+	wireframe = level.scena()->addAnimatedMeshSceneNode(mesh);
 	if(!wireframe)
 		{} //wywal program na zbity pysk (ewentualnie grzecznie zgłoś błąd)
 	wireframe->setScale( Wektor(-5, -5, -5) );
@@ -161,7 +136,7 @@ DumbDrone::DumbDrone(Wektor starting_location) :
 
 	wireframe->setMaterialFlag( video::EMF_BACK_FACE_CULLING, false);
 	wireframe->setMaterialFlag( video::EMF_LIGHTING, false );
-	wireframe->setMaterialTexture( 0, internals.video()->getTexture( "postacie/dronetekstura.png" ) ); 
+	wireframe->setMaterialTexture( 0, texture ); 
 
 	//sample locations to move
 	waypoints.push_back(Wektor(199.250015, 38.954994, -169.493530));
@@ -187,12 +162,10 @@ void IntelligentDrone::recalculateWaypoints()
 
 /// Konstruktor klasy Gold.
 /// Umieszcza złoto w miejscu określonym argumentem, 
-/// na scenie określonej w zmiennej globalnej internals
-/// TODO: wydzielić logikę levela z IrrlichtInternals i umieścić w osobnej klasie
-/// i przekazywać ją przez argument do konstruktora.
-Gold::Gold(Wektor position)
+/// na określonym poziomie.
+Gold::Gold(Level& level, video::ITexture* texture, Wektor position)
 {
-	wireframe = internals.scena()->addCubeSceneNode(10.0f, 0, -2, position, Wektor(0, 0, 0), Wektor(0.3f, 0.3f, 0.3f));
-	wireframe->setMaterialTexture( 0, internals.video()->getTexture( "postacie/goldtekstura.png" ) ); 
+	wireframe = level.scena()->addCubeSceneNode(10.0f, 0, -2, position, Wektor(0, 0, 0), Wektor(0.3f, 0.3f, 0.3f));
+	wireframe->setMaterialTexture( 0, texture ); 
 	wireframe->setMaterialFlag( video::EMF_LIGHTING, false );
 }

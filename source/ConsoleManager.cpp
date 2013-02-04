@@ -5,7 +5,7 @@
 void ConsoleManager::showMessages() const
 {
 	/*
-	virtual void irr::gui::IGUIFont::draw(const core::stringw& text,
+	virtual void irr::gui::IGUIFont::draw(const String& text,
 		const core::rect< s32 >& position,
 		video::SColor color,
 		bool hcenter = false,
@@ -14,7 +14,7 @@ void ConsoleManager::showMessages() const
 	) 
 	*/
 	unsigned nY = 50;
-	core::stringw fstr;
+	String fstr;
 	for (size_t i = 0; i < messages.size(); i++) 
 	{
 		fstr = messages[i];
@@ -29,36 +29,35 @@ void ConsoleManager::showMessages() const
 }
 
 /// Ustawia wirtualne urządzenie Irrlichta pod którym ma wyświetlać wiadomości.
-ConsoleManager::ConsoleManager(IrrlichtDevice* device) 
+ConsoleManager::ConsoleManager(const IrrlichtInternals& device) 
 {
 	font = device->getGUIEnvironment()->getBuiltInFont();
 }
 
 /// Dodaje wiadomość o kolejnym numerze identyfikacyjnym.
-void ConsoleManager::addMessage(const core::stringw& arg)
+void ConsoleManager::addMessage(const String& arg)
 {
 	messages.push_back(arg);
 }
 
 /// Nadpisuje wiadomość pod numerem nID.
 /// Jeżeli nie ma jeszcze takiej wiadomości, nic nie rób.
-void ConsoleManager::setMessage(unsigned nID, const core::stringw& arg)
+void ConsoleManager::setMessage(unsigned nID, const String& arg)
 {
 	if (nID < messages.size())
 		messages[nID] = arg;
 }
 
-/// Czyścienie ekranu - zalążek.
-/// TODO: zaimplementować.
+/// Czyścienie zawartości 
 void ConsoleManager::clear()
 {
-	
+	messages.clear();
 }
 
 /// Wyciąga informację zapisaną pod numerem nID.
 /// Jeżeli nie istnieje informacja pod danym numerem, 
 /// zwraca ciąg "!OutOfBound!".
-core::stringw ConsoleManager::getMessage(unsigned nID) const
+String ConsoleManager::getMessage(unsigned nID) const
 {
 	if (nID < messages.size())
 		return messages[nID];

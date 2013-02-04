@@ -6,20 +6,20 @@
 class ConsoleManager
 {
 private:
-	std::vector<core::stringw> messages;
+	std::vector<String> messages;
 	gui::IGUIFont* font;
 
 public:
 	void showMessages() const;
-	void addMessage(const core::stringw& arg);
-	void setMessage(unsigned nID, const core::stringw& arg);
+	void addMessage(const String& arg);
+	void setMessage(unsigned nID, const String& arg);
 	void clear();
 
-public:
-	core::stringw getMessage(unsigned nID) const;
+public: // 
+	String getMessage(unsigned nID) const;
 
-public:
-	ConsoleManager(IrrlichtDevice* device);
+public: // constructors
+	ConsoleManager(const IrrlichtInternals& device);
 };
 
 /// Alternatywna klasa konsoli, jeszcze ją rozwijam.
@@ -36,9 +36,7 @@ private:
 public:
 	AlternativeConsole();
 
-	void putstring(const core::stringw& str);
-
-	void printf(const core::stringw& str, ...);
-
+	void putstring(const String& str);
+	void printf(const String& str, ...);
 	void gotoxy(std::size_t x, std::size_t y);
 };

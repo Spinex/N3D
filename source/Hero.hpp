@@ -1,17 +1,6 @@
 #pragma once
 #include "precomp.hpp"
 
-/// Obiekt na planszy.
-class Entity
-{
-private:
-
-public:
-	virtual Wektor getPosition() const = 0;
-	virtual void refreshState() = 0;
-	virtual ~Entity() {}
-};
-
 class HeroCollisionCallback : public scene::ICollisionCallback
 {
 	bool onCollision(const scene::ISceneNodeAnimatorCollisionResponse & animator);
@@ -20,57 +9,50 @@ class HeroCollisionCallback : public scene::ICollisionCallback
 /// Główny bohater.
 class Hero : public Entity {
 private:
-	float fRotate;
-	DIRECTION dKierunekRuchu;
-	ANIMATIONS AMove;
-	float fMovement_Speed;
-	unsigned nAnimation_Speed;
-	float fBezwladnosc;
-	float fOpoznienie;
-	bool bJestMartwy;
+	unsigned animation_speed;
+	float bezwladnosc;
+	float opoznienie;
+	bool stan_skoku;
+	float falling_speed;
+	float gravity_acceleration;
 	
-	bool bStanSkoku;
-	float fFallingSpeed;
-	float fGravityAcceleration;
-	
+	float rotation;
+	DIRECTION kierunek_ruchu;
+	ANIMATIONS animation_type;
+	float movement_speed;
+	float time_to_live;
+	Wektor velocity;
 	SideCollisionDetector znacznikiKolizji;
-	scene::IAnimatedMeshSceneNode* heroWireframe;
-	HeroCollisionCallback hero_collision_callback;
-	
+	scene::IAnimatedMeshSceneNode* wireframe;
 	std::vector<scene::ISceneNodeAnimatorCollisionResponse*> animators;
 	
-public:
-    void fallDown();
-    void stopFallingDown() {fFallingSpeed = 0;}   
-    void setJumpState(bool bV) {bStanSkoku = bV;}
-    bool getJumpState() {return bStanSkoku;}
-    void jump();
-//	void invertDirection();
-public:
-	void rotate(float fValue) {fRotate = fValue;} 
-	void move(ANIMATIONS Anim, DIRECTION Direct); 
+public: // these should not exist
+	void fallDown();
+	void stopFallingDown() {falling_speed = 0;}
+	void setJumpState(bool bV) {stan_skoku = bV;}
+	bool getJumpState() {return stan_skoku;}
 	void decelerate();
-			
-	void resetAnimAndSpeed() { fMovement_Speed = fSzybkoscGracza; nAnimation_Speed = nSzybkoscAnimacjiGracza; }
-    	
-	void setDirection(DIRECTION dValue) {dKierunekRuchu = dValue;}
-	void setMovementSpeed(float fV) { fMovement_Speed = fV; }
-	void setAnimationSpeed(unsigned nV) {nAnimation_Speed = nV;}
-	void setBezwladnosc(float fV) {fBezwladnosc = fV;}
-	
+	void resetAnimAndSpeed() { movement_speed = SzybkoscGracza; animation_speed = SzybkoscAnimacjiGracza; }
+	void setMovementSpeed(float fV) { movement_speed = fV; }
+	void setAnimationSpeed(unsigned nV) {animation_speed = nV;}
+	void setBezwladnosc(float fV) {bezwladnosc = fV;}
+	DIRECTION getDirection() const {return kierunek_ruchu;}  
+	ANIMATIONS getAnimation() const {return animation_type;}
+	float getRotation() const {return rotation;}
+	float getMovementSpeed() const {return movement_speed;}
+	float getBezwladnosc() const {return bezwladnosc;}
+
 public:
-	DIRECTION getDirection() const {return dKierunekRuchu;}  
-	ANIMATIONS getAnimation() const {return AMove;}
+	void jump();
+	void rotate(float r) {rotation = r;} 
+	void move(ANIMATIONS anim, DIRECTION direct); 
+	void setDirection(DIRECTION dValue) {kierunek_ruchu = dValue;}
 	
-	
+public:	
 	SideCollisionDetector& getZnacznikiKolizji() {return znacznikiKolizji;}
 	
-	float getRotation() const {return fRotate;}
-	float getMovementSpeed() const {return fMovement_Speed;}
-	float getBezwladnosc() const {return fBezwladnosc;}
-	
 public:
-	Hero(float fSpeed, float Rotate, Wektor pozycja, Wektor skala, unsigned nAnimSpeed, float fMovementSpeed);
+	Hero(Level& level, video::ITexture* texture, float fSpeed, float rotate, Wektor pozycja, Wektor skala, unsigned nAnimSpeed, float fMovementSpeed);
 	~Hero();
 	void refreshState();
 	Wektor getPosition() const;
@@ -93,7 +75,7 @@ private:
 public:
 	void refreshState();
 
-	DumbDrone(Wektor starting_location);
+	DumbDrone(Level& level, video::ITexture* texture, Wektor starting_location);
 
 	Wektor getPosition() const
 	{
@@ -103,7 +85,7 @@ public:
 };
 
 /// Dron kopiący prądem. Wersja z namierzaniem gracza.
-class IntelligentDrone : public Entity {
+class IntelligentDrone : public DumbDrone {
 	void recalculateWaypoints();
 };
 
@@ -115,7 +97,7 @@ class Gold : public Entity {
     scene::IMeshSceneNode* wireframe;
 
     public:
-	Gold(Wektor position);
+	Gold(Level& level, video::ITexture* texture, Wektor position);
 	void refreshState() {}
 	Wektor getPosition() const {return wireframe->getPosition();}
 };

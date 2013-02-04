@@ -1,7 +1,5 @@
 #pragma once
 
-#pragma comment(lib, "Irrlicht.lib")
-
 // wiem, że mówiłem o zasadzie "biblioteki standardowe wstawiać do precomp.hpp"
 // ale ten jeden plik nagłówkowy jest wyjątkowy i nie może być w prekompilowanym nagłówku
 #include <cassert>
@@ -33,38 +31,34 @@ extern scene::IAnimatedMesh* heroMesh;
 extern const io::path Hero_Mesh;
 extern const io::path Hero_Texture;
 
-extern const float fPozycjaGraczaX;
-extern const float fPozycjaGraczaY;
-extern const float fPozycjaGraczaZ;
-extern const float fSkalaGraczaX;
-extern const float fSkalaGraczaY;
-extern const float fSkalaGraczaZ;
+extern const float pozycja_gracza_x;
+extern const float pozycja_gracza_y;
+extern const float pozycja_gracza_z;
+extern const float skala_gracza_x;
+extern const float skala_gracza_y;
+extern const float skala_gracza_z;
 
-extern float fObrotGraczaY;
+extern float ObrotGraczaY;
 
-extern const float fSzybkoscGracza;
-extern const unsigned nSzybkoscAnimacjiGracza;
+extern const float SzybkoscGracza;
+extern const unsigned SzybkoscAnimacjiGracza;
 
 extern scene::ISceneNodeAnimatorCollisionResponse* anim;
 
-/*// Testowe poczatek!!!
-
-extern scene::ISceneNodeAnimatorCollisionResponse* animKladki;
-extern scene::ITriangleSelector* selectorKladki;
-
-// Testowe koniec!!!*/
-
 extern const EKEY_CODE klawiszSkoku;
 
-extern const float fSilaTarcia;
-extern const float fSilaSkoku;
+extern const float SilaTarcia;
+extern const float SilaSkoku;
 
 typedef irr::core::vector3df Wektor;
+typedef std::unique_ptr<irr::IrrlichtDevice> IrrlichtInternals;
+typedef irr::core::stringw String;
 
 #include "InputOutputHandler.hpp"
+#include "Entity.hpp"
 #include "SideCollisionDetector.hpp"
 #include "Hero.hpp"
 #include "ConsoleManager.hpp"
-#include "IrrlichtInternals.hpp"
+#include "Level.hpp"
 
-
+extern ConsoleManager konsola;
