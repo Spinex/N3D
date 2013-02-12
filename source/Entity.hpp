@@ -1,5 +1,4 @@
 #pragma once
-#include "precomp.hpp"
 
 /// Obiekt na planszy.
 class Entity

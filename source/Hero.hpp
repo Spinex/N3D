@@ -1,5 +1,4 @@
 #pragma once
-#include "precomp.hpp"
 
 class HeroCollisionCallback : public scene::ICollisionCallback
 {

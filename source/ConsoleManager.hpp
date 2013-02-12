@@ -1,5 +1,4 @@
 #pragma once
-#include "precomp.hpp"
 
 /// Klasa do wyświetlania informacji do debugowania.
 /// Zawiera prosty intefejs do umieszczania wiadomości.

@@ -1,5 +1,4 @@
 #pragma once
-#include "precomp.hpp"
 
 typedef scene::ISceneNodeAnimatorCollisionResponse AnimatorKolizji;
 
