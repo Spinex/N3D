@@ -25,14 +25,10 @@ void InputOutputHandler::sterowaniePostacia(Hero& hero)
 	konsola.setMessage(2, bStany[2] ? "forward: true" : "forward: false");
 	konsola.setMessage(3, bStany[3] ? "back: true" : "back: false");
 	konsola.setMessage(4, bStany[4] ? "up: true" : "up: false");
-	konsola.setMessage(5, bStany[5] ? "down: true" : "down: false");
-
-	// przerobić na callback, serio
+	konsola.setMessage(5, bStany[5] ? "down: true" : "down: false"); 
+	
 	if(!bStany[SideCollisionDetector::down])
 		hero.fallDown();
-	else
-		hero.stopFallingDown();
-
 
 	hero.getZnacznikiKolizji().setPosition(hero.getPosition(), hero.getRotation(), hero.getDirection());
 	hero.getZnacznikiKolizji().setRotation(hero.getRotation(), hero.getDirection());
@@ -43,13 +39,7 @@ void InputOutputHandler::sterowaniePostacia(Hero& hero)
 		hero.setJumpState(true);
 		hero.stopFallingDown();
 	}
-	else if	(IsKeyDown( klawiszSkoku ) && (!bStany[SideCollisionDetector::down] && bStany[SideCollisionDetector::forward]))
-	{
-		hero.setJumpState(true);
-		hero.stopFallingDown();
-		hero.rotate(hero.getRotation() + 180);
-		time_interval = 15;
-	}
+	
 	else if (bStany[SideCollisionDetector::down] || bStany[SideCollisionDetector::up])
 		hero.setJumpState(false);
 	if(hero.getJumpState())
@@ -87,17 +77,9 @@ void InputOutputHandler::sterowaniePostacia(Hero& hero)
 		hero.getZnacznikiKolizji().setRotation(hero.getRotation(), hero.getDirection());
 
 		hero.move(WALK, hero.getDirection());
-		
-		if (!hero.getJumpState() || time_interval <= 0)
-		{
-		    moveCameraControl();
-		}	
-		else 
-		{		
-		   moveCameraControl();
-		   hero.rotate(direction - 90);
-		   time_interval -= 1;
-		}
+		moveCameraControl();
+			
+	
 	}
 	hero.rotate(direction - 90);
 }
