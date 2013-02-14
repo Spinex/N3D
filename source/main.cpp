@@ -20,8 +20,6 @@
 int main()
 {
 	extern IrrlichtInternals internals;
-	extern Level level;
-	extern InputOutputHandler aktywne;
 	auto* pVideo = internals->getVideoDriver();
 	konsola.addMessage("left: false");
 	konsola.addMessage("right: false");
