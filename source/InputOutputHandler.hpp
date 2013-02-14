@@ -19,6 +19,9 @@ public:
 	InputOutputHandler(const IrrlichtInternals& spDevice);
 	void sterowaniePostacia(Hero& hero);
 	void moveCameraControl();
+	
+	void setCameraDirection(float fV) {direction = fV;}
+	float getCameraDirection() const {return direction;}
 
 private:
 	bool KeyIsDown[ KEY_KEY_CODES_COUNT ];
