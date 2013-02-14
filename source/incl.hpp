@@ -54,11 +54,17 @@ typedef irr::core::vector3df Wektor;
 typedef std::unique_ptr<irr::IrrlichtDevice> IrrlichtInternals;
 typedef irr::core::stringw String;
 
+class Level;
+extern Level level;
+
+
 #include "InputOutputHandler.hpp"
 #include "Entity.hpp"
 #include "SideCollisionDetector.hpp"
 #include "Hero.hpp"
 #include "ConsoleManager.hpp"
 #include "Level.hpp"
+
+extern InputOutputHandler aktywne;
 
 extern ConsoleManager konsola;
