@@ -6,6 +6,33 @@ bool HeroCollisionCallback::onCollision(const scene::ISceneNodeAnimatorCollision
 	const scene::ISceneNode* collided_node = animator.getCollisionNode();
 	printf("CLD %d ", collided_node->getID());
 	if (collided_node->getID() == 1337) exit(0);
+	
+	SideCollisionDetector& znaczniki = level.bohaterGry->getZnacznikiKolizji();
+	
+	std::vector<bool> bStanKolizji = znaczniki.getCollisionState();
+
+	if (bStanKolizji[SideCollisionDetector::down])
+		level.bohaterGry->stopFallingDown();
+	
+	if (!bStanKolizji[SideCollisionDetector::down] &&
+	    !bStanKolizji[SideCollisionDetector::up] &&
+       ( bStanKolizji[SideCollisionDetector::left] ||
+		 bStanKolizji[SideCollisionDetector::right]||
+		 bStanKolizji[SideCollisionDetector::forward]||
+		 bStanKolizji[SideCollisionDetector::backward]) &&
+         aktywne.IsKeyDown( klawiszSkoku ) )
+	{	 
+        level.bohaterGry->stopFallingDown();
+		if (bStanKolizji[SideCollisionDetector::right]&&
+			bStanKolizji[SideCollisionDetector::forward])
+		aktywne.setCameraDirection(aktywne.getCameraDirection() - 30);
+		else
+		if (bStanKolizji[SideCollisionDetector::left]&&
+			bStanKolizji[SideCollisionDetector::forward])
+		aktywne.setCameraDirection(aktywne.getCameraDirection() + 30);
+        }		
+    	
+	
 	return false;
 }
 
